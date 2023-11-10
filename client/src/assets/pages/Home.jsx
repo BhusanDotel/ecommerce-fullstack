@@ -1,14 +1,16 @@
 import React from "react";
+import axios from "axios";
 import Nav from "../components/Nav";
 import Product from "../components/Product";
-import ProductArray from "../data/Products";
+// import ProductArray from "../data/Products";
 import { StateContext } from "../context/StateContext";
 import "../styles/Home/Home.css";
 
 function Home() {
   const { cartData, setlocalStorageUpdate, setCartData } =
     React.useContext(StateContext);
-  const renderProductsArray = ProductArray.map((product, index) => {
+  const [ProductData, setProductData] = React.useState([]);
+  const renderProductsArray = ProductData.map((product, index) => {
     return (
       <Product
         key={index}
@@ -16,11 +18,21 @@ function Home() {
         image={product.image}
         name={product.name}
         rating={product.rating}
-        priceCents={product.priceCents}
+        price={product.price}
         getCartData={recieveData}
       />
     );
   });
+
+  React.useEffect(() => {
+    async function fetchProducts() {
+      const response = await axios.get("http://localhost:3000/api/products");
+      const data = response.data;
+      console.log(data);
+      setProductData(data);
+    }
+    fetchProducts();
+  }, []);
 
   function recieveData(cartDataProducts) {
     const _cartData = [...cartData];

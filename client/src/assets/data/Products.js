@@ -81,7 +81,7 @@ export default [
   {
     _id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
     image: "images/products/sprite.webp",
-    name: "Sprite 1.5L ",
+    name: "Sprite 1.5L",
     rating: {
       stars: 4.5,
       count: 144,

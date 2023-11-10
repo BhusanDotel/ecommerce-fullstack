@@ -20,6 +20,7 @@ mongoose
   });
 
 app.use("/api/admin", productRoutes);
+app.use("/api", productRoutes);
 app.use("/api", authRoutes);
 app.use("/api", authRoutes);
 

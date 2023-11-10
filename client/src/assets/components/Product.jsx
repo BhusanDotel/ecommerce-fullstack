@@ -53,7 +53,7 @@ function Product(props) {
     <div>
       <div className="product-container">
         <div className="product-image-container">
-          <img className="product-image" src={props.image} />
+          <img className="product-image" src={props.image.source} />
         </div>
 
         <div className="product-name limit-text-to-2-lines">{props.name}</div>
@@ -68,7 +68,7 @@ function Product(props) {
           </div>
         </div>
 
-        <div className="product-price">{`Rs ${props.priceCents / 100}`}</div>
+        <div className="product-price">{`Rs ${props.price / 100}`}</div>
 
         <div className="product-quantity-container">
           <select name="quantity" onChange={handleQuantity} value={quantity}>

@@ -6,12 +6,24 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {
     img_name: String,
     source: String,
+  },
+  rating: {
+    stars: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5,
+    },
+    count: {
+      type: Number,
+      required: true,
+    },
   },
 });
 

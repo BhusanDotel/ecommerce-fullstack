@@ -11,5 +11,6 @@ router.post(
   upload.single("image"),
   productController.uploadProductImage
 );
+router.get("/products", productController.fetchProducts);
 
 module.exports = router;

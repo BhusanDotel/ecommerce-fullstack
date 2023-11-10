@@ -11,7 +11,8 @@ const saveProductData = (req, res) => {
 };
 
 const uploadProductImage = async (req, res) => {
-  const { name, price } = image_data;
+  const { name, price, rating } = image_data;
+  const { stars, count } = rating;
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded." });
   }
@@ -25,10 +26,14 @@ const uploadProductImage = async (req, res) => {
     console.log(error);
   }
 
-  if (name && price && image_url) {
+  if (name && price && stars && count && image_url) {
     const product = new ProductData({
       name: name,
       price: price,
+      rating: {
+        stars: stars,
+        count: count,
+      },
       image: {
         img_name: name,
         source: image_url,
@@ -39,7 +44,13 @@ const uploadProductImage = async (req, res) => {
   }
 };
 
+const fetchProducts = async (req, res) => {
+  const products = await ProductData.find();
+  products.length > 0 ? res.json(products) : res.json("no products found");
+};
+
 module.exports = {
   saveProductData,
   uploadProductImage,
+  fetchProducts,
 };
