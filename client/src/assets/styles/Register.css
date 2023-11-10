@@ -1,0 +1,208 @@
+.reg-root {
+  background-image: url("images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+.reg-logo {
+  height: 50px;
+  width: 50px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+.reg-div-to-flex {
+  display: flex;
+  justify-content: center;
+}
+.reg-main {
+  top: 100px;
+  background-color: white;
+  width: 350px;
+  border-radius: 35px;
+  display: flex;
+  justify-content: center;
+  animation-duration: 0.1s;
+  animation-timing-function: linear;
+}
+.reg-container {
+  width: 280px;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 40px 20px 20px 240px 55px 30px 45px;
+}
+.reg-logo-div {
+  display: grid;
+  grid-template-columns: 110px 30px;
+  justify-content: center;
+  align-items: center;
+}
+.reg-logo-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(141, 141, 141);
+}
+.reg-mini-logo {
+  height: 30px;
+  width: 30px;
+}
+.register-here-div {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.register-here-text {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 22px;
+  margin: 0;
+  font-weight: 700;
+}
+.reg-enter-details-div {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+.reg-enter-details-text {
+  font-size: 9px;
+  color: rgb(122, 122, 122);
+  margin: 0;
+  font-weight: bold;
+}
+.reg-email-already-use-text {
+  margin: 0;
+  color: red;
+  font-size: 12px;
+  display: flex;
+  margin-top: 7px;
+  margin-left: 10px;
+  align-items: end;
+}
+.reg-input-div {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 45px);
+  row-gap: 3px;
+}
+.reg-email-input,
+.reg-lname-input,
+.reg-fname-input,
+.reg-password-input,
+.reg-address-input {
+  border: 1px solid rgb(83, 83, 83);
+  outline: none;
+  border-radius: 10px;
+  padding-left: 10px;
+  font-weight: 700;
+  width: auto;
+}
+.reg-button-div {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.reg-register-button {
+  height: 40px;
+  width: 70%;
+  background-color: rgb(243, 58, 58);
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.reg-register-button:hover {
+  opacity: 0.9;
+}
+.reg-register-button:active {
+  transform: scale(0.9);
+}
+.reg-already-user-div {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.reg-already-user-text {
+  margin: 0;
+  font-size: small;
+}
+.reg-login-here-text {
+  color: green;
+}
+.registration-complete-div {
+  display: flex;
+  justify-content: center;
+}
+.reg-tick {
+  color: green;
+  font-weight: bolder;
+  font-size: larger;
+}
+.redirecting-to-login-div {
+  display: grid;
+  grid-template-columns: 110px 20px;
+  justify-content: center;
+  align-items: center;
+}
+.redirecting-to-login-text {
+  font-size: 12px;
+}
+
+.reg-shake {
+  animation-name: shake;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-15px);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+
+@media screen and (min-width: 30px) and (max-width: 600px) {
+  .reg-logo {
+    width: 30px;
+    height: 30px;
+  }
+  .reg-main {
+    top: 80px;
+    width: 260px;
+  }
+  .reg-container {
+    width: 200px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    grid-template-rows: 25px 40px 10px 20px 185px 45px 30px 45px;
+  }
+  .reg-logo-div {
+    grid-template-columns: 90px 20px;
+  }
+  .reg-logo-text {
+    font-size: 12px;
+  }
+  .reg-mini-logo {
+    height: 25px;
+    width: 25px;
+  }
+  .reg-register-here-text {
+    font-size: 20px;
+  }
+  .reg-input-div {
+    grid-template-rows: repeat(5, 35px);
+  }
+  .reg-register-button {
+    height: 35px;
+    font-size: large;
+  }
+}

@@ -1,0 +1,6 @@
+.admin-orders-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  background-color: rgb(178, 32, 32);
+}

@@ -1,0 +1,94 @@
+.admin-input-container {
+  display: flex;
+  column-gap: 10px;
+  flex: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  padding: 10px;
+}
+.admin-input-fields {
+  border: 1px solid rgb(159, 155, 155);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.admin-input-price,
+.admin-input-productName,
+.admin-input-image {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 30px;
+}
+.admin-input-image {
+  border: none;
+  padding-left: 1px;
+}
+.admin-input-price::placeholder,
+.admin-input-productName::placeholder,
+.admin-input-image::placeholder {
+  font-size: 15px;
+}
+.admin-update-button {
+  width: 100%;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgb(159, 155, 155);
+  height: 30px;
+  background-color: rgb(11, 182, 11);
+  color: white;
+  cursor: pointer;
+}
+.admin-update-button:active {
+  transform: scale(0.9);
+}
+.display-message-container {
+  margin-top: 20px;
+}
+.upload-good-response {
+  color: green;
+}
+.upload-bad-response {
+  color: red;
+}
+.display-message-container {
+  height: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.show-input-image {
+  height: 300px;
+  width: 300px;
+  overflow: hidden;
+  border: 1px solid rgb(159, 155, 155);
+  border-radius: 10px;
+  padding: 10px;
+}
+.updated-image {
+  height: 300px;
+  width: 300px;
+  object-fit: contain;
+  object-position: center;
+}
+@media (max-width: 1200px) {
+  .admin-root {
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .admin-input-container {
+    flex-direction: column;
+  }
+  .show-input-image {
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+}
