@@ -231,6 +231,7 @@ input {
     font-size: 11px;
   }
   .input-div {
+    width: 100%;
     margin-top: 5px;
     margin-bottom: 5px;
     display: grid;
@@ -238,9 +239,6 @@ input {
     grid-template-rows: 35px 35px;
     row-gap: 10px;
     position: relative;
-  }
-  input {
-    width: 170px;
   }
   .email-icon {
     bottom: 60px;
