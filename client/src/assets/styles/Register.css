@@ -136,20 +136,15 @@
 .registration-complete-div {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+}
+.registration-complete-text {
+  color: green;
 }
 .reg-tick {
   color: green;
   font-weight: bolder;
   font-size: larger;
-}
-.redirecting-to-login-div {
-  display: grid;
-  grid-template-columns: 110px 20px;
-  justify-content: center;
-  align-items: center;
-}
-.redirecting-to-login-text {
-  font-size: 12px;
 }
 
 .reg-shake {

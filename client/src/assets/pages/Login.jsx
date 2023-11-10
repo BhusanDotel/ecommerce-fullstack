@@ -1,9 +1,22 @@
 import React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 function Login() {
   const [isShaking, setShaking] = React.useState(false);
   const [isUser, setUser] = React.useState(false);
+  const [userInfo, setUserInfo] = React.useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+
+  function handleChange(e) {
+    const _userInfo = { ...userInfo };
+    _userInfo[e.target.name] = e.target.value;
+    setUserInfo(_userInfo);
+  }
 
   function loginFail() {
     setUser(true);
@@ -19,9 +32,30 @@ function Login() {
     }, 100);
   }
 
-  function Login() {
-    loginFail();
-    startShake();
+  async function Login() {
+    const { email, password } = userInfo;
+    if (email !== "" && password !== "") {
+      try {
+        await axios
+          .post("http://localhost:3000/api/login", {
+            email,
+            password,
+          })
+          .then((res) => {
+            if (res.data === "not exists") {
+              loginFail();
+              startShake();
+            } else {
+              const authToken = res.data.authToken;
+              localStorage.setItem("authToken", authToken);
+              navigate("/");
+              location.reload();
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
   return (
     <div className="login-root">
@@ -57,11 +91,19 @@ function Login() {
             </div>
             <div className="input-div">
               <img className="email-icon" src="images/email-icon.jpg" />
-              <input className="email-input" type="email" placeholder="Email" />
+              <input
+                className="email-input"
+                name="email"
+                onChange={handleChange}
+                type="email"
+                placeholder="Email"
+              />
               <img className="password-icon" src="images/password-icon.png" />
               <input
                 className="password-input"
                 type="password"
+                name="password"
+                onChange={handleChange}
                 placeholder="Password"
               />
             </div>

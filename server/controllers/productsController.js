@@ -1,12 +1,6 @@
 const cloudinary = require("../config/cloudinaryConfig");
 const ProductData = require("../models/productsModel");
 
-// cloudinary.config({
-//   cloud_name: "kindimnata",
-//   api_key: "hbb",
-//   api_secret: "hbhb",
-// });
-
 let image_data;
 let image_url;
 

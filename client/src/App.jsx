@@ -8,28 +8,39 @@ import Admindashboard from "./assets/pages/Admindashboard";
 import DisplayOrders from "./assets/components/Admin/DisplayOrders";
 import InputProducts from "./assets/components/Admin/InputProducts";
 import NoPageFound from "./assets/pages/NoPageFound";
-import { StateProvider } from "./assets/context/StateProvider";
+import { StateContext } from "./assets/context/StateContext";
 import "./assets/styles/General.css";
 
 function App() {
+  const { isLoggedIn } = React.useContext(StateContext);
   return (
     <>
-      <StateProvider>
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route index element={<Home />} />
-          <Route path="checkout" element={<Checkout />} />
+      <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route index element={isLoggedIn ? <Home /> : <Login />} />
+        <Route
+          path="checkout"
+          element={isLoggedIn ? <Checkout /> : <Login />}
+        />
 
-          <Route path="admin-dashboard" element={<Admindashboard />}>
-            <Route index element={<DisplayOrders />} />
-            <Route path="displayorders" element={<DisplayOrders />} />
-            <Route path="inputproducts" element={<InputProducts />} />
-          </Route>
+        <Route
+          path="admin-dashboard"
+          element={isLoggedIn ? <Admindashboard /> : <Login />}
+        >
+          <Route index element={isLoggedIn ? <DisplayOrders /> : <Login />} />
+          <Route
+            path="displayorders"
+            element={isLoggedIn ? <DisplayOrders /> : <Login />}
+          />
+          <Route
+            path="inputproducts"
+            element={isLoggedIn ? <InputProducts /> : <Login />}
+          />
+        </Route>
 
-          <Route path="*" element={<NoPageFound />} />
-        </Routes>
-      </StateProvider>
+        <Route path="*" element={<NoPageFound />} />
+      </Routes>
     </>
   );
 }

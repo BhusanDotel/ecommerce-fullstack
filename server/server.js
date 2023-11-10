@@ -3,6 +3,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
+const productRoutes = require("./routes/productRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,12 +19,9 @@ mongoose
     console.log("Error", e);
   });
 
-const productRoutes = require("./routes/productRoutes");
 app.use("/api/admin", productRoutes);
-
-app.get("/", (req, res) => {
-  res.json({ username: "bhusan", age: 23 });
-});
+app.use("/api", authRoutes);
+app.use("/api", authRoutes);
 
 app.listen(3000, () => {
   console.log("App listening on port 3000!");
