@@ -13,6 +13,7 @@ import "./assets/styles/General.css";
 
 function App() {
   const { isLoggedIn } = React.useContext(StateContext);
+  const { isAdmin } = React.useContext(StateContext);
   return (
     <>
       <Routes>
@@ -26,16 +27,16 @@ function App() {
 
         <Route
           path="admin-dashboard"
-          element={isLoggedIn ? <Admindashboard /> : <Login />}
+          element={isAdmin ? <Admindashboard /> : <Login />}
         >
-          <Route index element={isLoggedIn ? <DisplayOrders /> : <Login />} />
+          <Route index element={isAdmin ? <DisplayOrders /> : <Login />} />
           <Route
             path="displayorders"
-            element={isLoggedIn ? <DisplayOrders /> : <Login />}
+            element={isAdmin ? <DisplayOrders /> : <Login />}
           />
           <Route
             path="inputproducts"
-            element={isLoggedIn ? <InputProducts /> : <Login />}
+            element={isAdmin ? <InputProducts /> : <Login />}
           />
         </Route>
 

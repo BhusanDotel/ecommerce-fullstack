@@ -2,18 +2,43 @@
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  width: 100%;
-  column-gap: 10px;
+  justify-content: space-between;
   background-color: black;
   color: white;
   height: 40px;
   padding-left: 10px;
+  padding-right: 15px;
+}
+.admin-nav-left-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
 }
 .admin-link-displayorder,
 .admin-link-inputproducts {
   color: white;
   text-decoration: none;
   cursor: pointer;
+}
+.admin-link-home {
+  cursor: pointer;
+}
+.admin-link-home:hover {
+  text-decoration: underline;
+}
+.admin-nav-right-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+}
+.admin-link-logout {
+  color: orange;
+  background-color: transparent;
+  border: 1px solid white;
+  height: 25px;
+  border-radius: 5px;
 }
 
 .active {

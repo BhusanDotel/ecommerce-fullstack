@@ -13,7 +13,8 @@ function Nav() {
     });
   }
   function logOut() {
-    console.log("logout now");
+    localStorage.clear();
+    location.reload();
   }
   return (
     <div className="home-header">

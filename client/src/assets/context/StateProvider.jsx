@@ -9,6 +9,7 @@ export const StateProvider = (props) => {
   const [localStorageUpdate, setlocalStorageUpdate] = React.useState(0);
   const [deliveryCost, setDeliveryCost] = React.useState(0);
   const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [isAdmin, setAdmin] = React.useState(false);
 
   React.useEffect(() => {
     const cartDataArray = JSON.parse(localStorage.getItem("cartDataArray"));
@@ -36,9 +37,13 @@ export const StateProvider = (props) => {
         setDeliveryCost(0);
       }
     }
-    const authToken = localStorage.getItem("authToken");
-    if (authToken) {
+    const authToken_user = localStorage.getItem("authToken_user");
+    if (authToken_user) {
       setLoggedIn(true);
+    }
+    const authToken_admin = localStorage.getItem("authToken_admin");
+    if (authToken_admin) {
+      setAdmin(true);
     }
   }, [localStorageUpdate]);
 
@@ -54,6 +59,8 @@ export const StateProvider = (props) => {
         deliveryCost,
         isLoggedIn,
         setLoggedIn,
+        isAdmin,
+        setAdmin,
       }}
     >
       {props.children}

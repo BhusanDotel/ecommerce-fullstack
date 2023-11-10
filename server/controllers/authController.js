@@ -33,11 +33,19 @@ const login = async (req, res) => {
     if (emailExists) {
       const passwordMath = await bcrypt.compare(password, emailExists.password);
       if (passwordMath) {
-        const uId = {
-          id: emailExists._id,
-        };
-        const token = jwt.sign(uId, secretKey);
-        return res.json({ authToken: token });
+        if (emailExists.isAdmin === true) {
+          const uId = {
+            id: emailExists._id,
+          };
+          const admin_token = jwt.sign(uId, secretKey);
+          return res.json({ authToken_admin: admin_token });
+        } else {
+          const uId = {
+            id: emailExists._id,
+          };
+          const user_token = jwt.sign(uId, secretKey);
+          return res.json({ authToken_user: user_token });
+        }
       } else {
         res.send("not exists");
       }

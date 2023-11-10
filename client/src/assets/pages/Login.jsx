@@ -46,10 +46,18 @@ function Login() {
               loginFail();
               startShake();
             } else {
-              const authToken = res.data.authToken;
-              localStorage.setItem("authToken", authToken);
-              navigate("/");
-              location.reload();
+              if (res.data.authToken_user) {
+                const authToken = res.data.authToken_user;
+                localStorage.setItem("authToken_user", authToken);
+                navigate("/");
+                location.reload();
+              } else if (res.data.authToken_admin) {
+                const authToken = res.data.authToken_admin;
+                localStorage.setItem("authToken_admin", authToken);
+                localStorage.setItem("authToken_user", authToken);
+                navigate("/admin-dashboard");
+                location.reload();
+              }
             }
           });
       } catch (error) {
