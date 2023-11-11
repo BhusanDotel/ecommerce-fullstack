@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const app = express();
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,7 +23,7 @@ mongoose
 app.use("/api/admin", productRoutes);
 app.use("/api", productRoutes);
 app.use("/api", authRoutes);
-app.use("/api", authRoutes);
+app.use("/api", orderRoutes);
 
 app.listen(3000, () => {
   console.log("App listening on port 3000!");

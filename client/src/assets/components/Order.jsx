@@ -101,7 +101,7 @@ function Order(props) {
 
           <div className="cart-item-details">
             <div className="product-name">{props.name}</div>
-            <div className="product-price">Rs {props.priceCents / 100}</div>
+            <div className="product-price">Rs {props.price / 100}</div>
 
             <div className="product-quantity js-product-quantity">
               <span>

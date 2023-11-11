@@ -1,8 +1,10 @@
 import React from "react";
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../context/StateContext";
 import "../styles/Chcekout/PaymentSummar.css";
+import { orderRoute } from "../Utils/APIRoutes";
 
 function PaymentSummary() {
   const {
@@ -12,6 +14,7 @@ function PaymentSummary() {
     setlocalStorageUpdate,
     deliveryCost,
   } = React.useContext(StateContext);
+
   const [prices, setPrices] = React.useState({
     totalPrice: 0,
     deliveryHanlde: 0,
@@ -41,24 +44,33 @@ function PaymentSummary() {
     setCustomerInfo(_customerInfo);
   }
 
-  function placeOrder() {
+  async function placeOrder() {
     if (
       customerInfo.fname !== "" &&
       customerInfo.lname !== "" &&
       customerInfo.pNumber !== "" &&
       customerInfo.address !== ""
     ) {
-      localStorage.setItem("customerInfo", JSON.stringify(customerInfo));
-      setlocalStorageUpdate((prevState) => {
-        return prevState + 1;
-      });
-      toast.success("Order is successful", toastOptions);
-      setCustomerInfo({
-        fname: "",
-        lname: "",
-        pNumber: "",
-        address: "",
-      });
+      try {
+        await axios
+          .post(orderRoute, {
+            cartData,
+            customerInfo,
+          })
+          .then((res) => {
+            if (res.data === "order entry success") {
+              toast.success("Order is successful", toastOptions);
+              setCustomerInfo({
+                fname: "",
+                lname: "",
+                pNumber: "",
+                address: "",
+              });
+            } else {
+              toast.error("Failed to order", toastOptions);
+            }
+          });
+      } catch (error) {}
     } else {
       setFieldEmpty(true);
       setTimeout(() => {
@@ -70,18 +82,22 @@ function PaymentSummary() {
   React.useEffect(() => {
     if (cartData) {
       let total_Price = 0;
+      let total_delivery_cost = 0;
       cartData.forEach((item) => {
-        const price = item.priceCents * item.quantity;
+        const price = item.price * item.quantity;
+        const deliverycost = item.deliveryOption.deliveryCost;
         total_Price += price;
+        total_delivery_cost += deliverycost;
       });
-      const deliveryHanlde = prices.deliveryHanlde;
+      const deliveryHanlde = total_delivery_cost * 100;
+      console.log(deliveryHanlde);
       const totalBeforeTax = total_Price + deliveryHanlde;
       const taxAmout = (10 / 100) * totalBeforeTax;
       const grandTotal = totalBeforeTax + taxAmout;
 
-      const _prices = { prices };
+      const _prices = { ...prices };
       _prices.totalPrice = total_Price / 100;
-      _prices.deliveryHanlde = deliveryCost / 100;
+      _prices.deliveryHanlde = deliveryHanlde;
       _prices.totalBeforeTax = totalBeforeTax / 100;
       const taxAmout_raw = taxAmout / 100;
       const taxAmout_round = taxAmout_raw.toFixed(2);
@@ -173,7 +189,7 @@ function PaymentSummary() {
           name="address"
           value={customerInfo.address}
           className="checkout-address"
-          placeholder="Address*"
+          placeholder="Address: district-City/tole/landmark*"
           onChange={handleChange}
         ></input>
       </div>

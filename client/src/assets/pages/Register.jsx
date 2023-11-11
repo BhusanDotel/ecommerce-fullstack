@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "../styles/Register.css";
+import { registerRoute } from "../Utils/APIRoutes";
 
 function Register() {
   const [isShaking, setShaking] = React.useState(false);
@@ -39,7 +40,7 @@ function Register() {
       setLoading(true);
       try {
         await axios
-          .post("http://localhost:3000/api/register", {
+          .post(registerRoute, {
             fName,
             lName,
             address,

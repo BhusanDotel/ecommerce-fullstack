@@ -5,6 +5,7 @@ import Product from "../components/Product";
 // import ProductArray from "../data/Products";
 import { StateContext } from "../context/StateContext";
 import "../styles/Home/Home.css";
+import { fetchProductRoute } from "../Utils/APIRoutes";
 
 function Home() {
   const { cartData, setlocalStorageUpdate, setCartData } =
@@ -26,9 +27,8 @@ function Home() {
 
   React.useEffect(() => {
     async function fetchProducts() {
-      const response = await axios.get("http://localhost:3000/api/products");
+      const response = await axios.get(fetchProductRoute);
       const data = response.data;
-      console.log(data);
       setProductData(data);
     }
     fetchProducts();

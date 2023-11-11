@@ -41,10 +41,10 @@ function Product(props) {
       _id: props.id,
       deliveryOption: { deliveryCost: 0, deliveryDate: getDate().seventhDate },
       name: props.name,
-      priceCents: props.priceCents,
-      orderData: timeAndDate(),
+      price: props.price,
+      orderDate: timeAndDate(),
       quantity: quantity,
-      image: props.image,
+      image: props.image.source,
     };
     //to send cartData
     props.getCartData(cartData);

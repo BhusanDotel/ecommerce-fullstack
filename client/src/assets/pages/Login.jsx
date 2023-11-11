@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+import { loginRoute } from "../Utils/APIRoutes";
 
 function Login() {
   const [isShaking, setShaking] = React.useState(false);
@@ -37,7 +38,7 @@ function Login() {
     if (email !== "" && password !== "") {
       try {
         await axios
-          .post("http://localhost:3000/api/login", {
+          .post(loginRoute, {
             email,
             password,
           })

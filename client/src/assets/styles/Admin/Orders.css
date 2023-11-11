@@ -1,0 +1,123 @@
+.order-product-customer-container {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+.order-product-container {
+  display: flex;
+  column-gap: 10px;
+  padding: 10px;
+  overflow-x: scroll;
+}
+.order-products {
+  border: 1px solid rgb(184, 184, 184);
+  min-width: 200px;
+  padding: 5px;
+  border-radius: 5px;
+}
+.order-date {
+  font-size: 9px;
+}
+.order-delivery-date,
+.order-quantity,
+.order-price,
+.order-delivery-cost,
+.order-product-name {
+  font-size: 12px;
+  background-color: yellow;
+  margin-bottom: 5px;
+}
+.image-container {
+  margin: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  height: 90px;
+  width: 90px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.order-image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.customer-price-container {
+  margin-left: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-left: 1px solid black;
+  flex: 1;
+  max-width: 500px;
+  min-width: 250px;
+}
+.customer-container {
+  border: 1px solid rgb(160, 160, 160);
+  padding: 10px;
+  border-radius: 10px;
+}
+.customer-phone,
+.customer-address,
+.customer-name {
+  font-size: 12px;
+  background-color: orange;
+  padding: 2px;
+  margin-bottom: 5px;
+}
+.customer-info-title {
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.product-price-container {
+  margin-top: 10px;
+  border: 1px solid rgb(156, 154, 154);
+  border-radius: 5px;
+  padding: 10px;
+}
+.product-price-total,
+.product-price-deliverycost,
+.product-price-taxamount {
+  font-size: 12px;
+}
+.product-price-grandtotal {
+  background-color: yellow;
+  font-size: 20px;
+}
+.order-buttons-div {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-right: 15px;
+  column-gap: 10px;
+}
+.order-delete-button,
+.order-save-button {
+  height: 25px;
+  width: 50px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.order-delete-button {
+  background-color: red;
+}
+.order-save-button {
+  background-color: green;
+}
+.order-delete-button:active,
+.order-save-button:active {
+  transform: scale(0.9);
+}

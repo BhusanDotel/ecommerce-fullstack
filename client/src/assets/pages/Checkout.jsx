@@ -16,7 +16,7 @@ function Checkout() {
           id={product.id}
           name={product.name}
           image={product.image}
-          priceCents={product.priceCents}
+          price={product.price}
           quantity={product.quantity}
         />
       );

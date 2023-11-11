@@ -1,5 +1,5 @@
 .admin-header {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,5 +45,6 @@
   text-decoration: underline;
 }
 .admin-interaction-container {
-  padding: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
