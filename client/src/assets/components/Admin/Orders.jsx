@@ -1,11 +1,15 @@
 import React from "react";
+import axios from "axios";
 import OrderProducts from "./OrderProducts";
+import { saveOrderRoute } from "../../Utils/APIRoutes";
+import { deleteOrderRoute } from "../../Utils/APIRoutes";
 import "../../styles/Admin/Orders.css";
 
 function Orders(props) {
   const [totalCost, setTotalCost] = React.useState(0);
   const [totalDeliveryCost, setTotalDeliveryCost] = React.useState(0);
   const [taxAmount, setTaxAmount] = React.useState(0);
+  const [count, setCount] = React.useState(0);
   const products = props.products;
   const renderArray = products.map((item, index) => {
     return (
@@ -39,12 +43,32 @@ function Orders(props) {
     }, []);
   }, []);
 
-  function Save() {
-    console.log("save Item with ID:" + props._id);
+  const orderId = props._id;
+  async function Save() {
+    try {
+      await axios.post(saveOrderRoute, { orderId }).then((res) => {
+        if (res.data === "order saved") {
+          location.reload();
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  function Delete() {
-    console.log("Delete Item with ID:" + props._id);
+  async function Delete() {
+    try {
+      await axios.post(deleteOrderRoute, { orderId }).then((res) => {
+        if (res.data === "order deleted") {
+          location.reload();
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setCount((prevState) => {
+      return prevState + 1;
+    });
   }
 
   return (

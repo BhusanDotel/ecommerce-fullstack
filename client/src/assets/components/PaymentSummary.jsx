@@ -90,7 +90,6 @@ function PaymentSummary() {
         total_delivery_cost += deliverycost;
       });
       const deliveryHanlde = total_delivery_cost * 100;
-      console.log(deliveryHanlde);
       const totalBeforeTax = total_Price + deliveryHanlde;
       const taxAmout = (10 / 100) * totalBeforeTax;
       const grandTotal = totalBeforeTax + taxAmout;
