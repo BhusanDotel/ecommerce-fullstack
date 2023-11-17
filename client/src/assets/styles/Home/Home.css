@@ -1,50 +1,128 @@
-.home-main {
-  margin-top: 60px;
+.home-root {
+  background-image: url("/images/homeImg/bg.jpeg");
+  background-position: center;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.home-root.blur {
+  filter: blur(5px);
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
+.home-img-beerglass {
+  position: absolute;
+  height: 200px;
+  width: 140px;
+  object-fit: cover;
+  object-position: center;
+  bottom: 20%;
+  left: 20%;
+  animation: moveBeerGlass 3s ease-in-out;
+}
+.home-img-tuborgbeer {
+  position: absolute;
+  height: 400px;
+  width: 100px;
+  object-fit: cover;
+  object-position: center;
+  bottom: 20%;
+  left: 12%;
+  animation: moveBeer 3s ease-in-out;
 }
 
-@media (max-width: 2000px) {
-  .products-grid {
-    grid-template-columns: repeat(7, 1fr);
+@keyframes moveBeerGlass {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 20%;
   }
 }
 
-@media (max-width: 1600px) {
-  .products-grid {
-    grid-template-columns: repeat(6, 1fr);
+@keyframes moveBeer {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 12%;
   }
 }
 
-@media (max-width: 1300px) {
-  .products-grid {
-    grid-template-columns: repeat(5, 1fr);
+.home-img-about-mini {
+  position: absolute;
+  height: 105px;
+  width: 150px;
+  object-fit: cover;
+  object-position: center;
+  bottom: 10%;
+  left: 60%;
+  filter: blur(0.5px);
+}
+
+@media screen and (max-width: 1200px) {
+  .home-img-about-mini {
+    left: 40%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .home-img-about-mini {
+    position: absolute;
+    height: 50px;
+    width: 80px;
+    bottom: 10%;
+    left: 12%;
   }
 }
 
-@media (max-width: 1000px) {
-  .products-grid {
-    grid-template-columns: repeat(4, 1fr);
+@media screen and (max-width: 550px) {
+  .home-img-beerglass {
+    height: 200px;
+    width: 150px;
+  }
+  .home-img-tuborgbeer {
+    position: absolute;
+    height: 400px;
+    width: 100px;
+    bottom: 19%;
+    left: 5%;
+  }
+  @keyframes moveBeer {
+    0% {
+      left: -20%;
+    }
+    100% {
+      left: 5%;
+    }
   }
 }
 
-@media (max-width: 800px) {
-  .products-grid {
-    grid-template-columns: repeat(3, 1fr);
+h3 {
+  color: white;
+  padding: 10px;
+}
+.home-board-container {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+}
+.about-me-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  animation: slideIn 0.5s ease-out;
+}
+@keyframes slideIn {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 50%;
   }
 }
 
-@media (max-width: 575px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 450px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
+h1 {
+  color: white;
 }

@@ -23,6 +23,7 @@
 }
 .admin-link-home {
   cursor: pointer;
+  color: white;
 }
 .admin-link-home:hover {
   text-decoration: underline;

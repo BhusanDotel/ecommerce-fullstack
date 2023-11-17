@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./assets/pages/Login";
 import Register from "./assets/pages/Register";
 import Home from "./assets/pages/Home";
+import Products from "./assets/pages/Products";
 import Checkout from "./assets/pages/Checkout";
 import Admindashboard from "./assets/pages/Admindashboard";
 import DisplayOrders from "./assets/components/Admin/DisplayOrders";
@@ -24,6 +25,15 @@ function App() {
           path="checkout"
           element={isLoggedIn ? <Checkout /> : <Login />}
         />
+        <Route
+          path="newarrival"
+          element={isLoggedIn ? <Products /> : <Login />}
+        />
+        <Route
+          path="products"
+          element={isLoggedIn ? <Products /> : <Login />}
+        />
+        <Route path="cart" element={isLoggedIn ? <Checkout /> : <Login />} />
 
         <Route
           path="admin-dashboard"

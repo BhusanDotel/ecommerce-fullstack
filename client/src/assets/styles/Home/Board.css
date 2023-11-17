@@ -1,0 +1,29 @@
+.board-container {
+  position: relative;
+}
+
+.board-image {
+  height: 350px;
+  width: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.board-links-container {
+  position: absolute;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 100px 100px;
+  row-gap: 10px;
+  column-gap: 10px;
+  z-index: 1;
+  bottom: 28%;
+  left: 5%;
+  transform: rotate(8deg);
+}
+
+.board-nav-link {
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+}

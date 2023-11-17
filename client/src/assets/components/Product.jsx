@@ -1,6 +1,6 @@
 import React from "react";
 import { getDate } from "../service/Date";
-import "../styles/Home/Product.css";
+import "../styles/Products/Product.css";
 
 function Product(props) {
   const [isAdded, setAdded] = React.useState(false);
