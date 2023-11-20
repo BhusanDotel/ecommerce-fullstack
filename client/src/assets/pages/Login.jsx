@@ -46,6 +46,11 @@ function Login() {
             if (res.data === "not exists") {
               loginFail();
               startShake();
+            } else if (res.data === "not verified") {
+              alert("Email not verified");
+              navigate("/emailverification", {
+                state: { email: email },
+              });
             } else {
               if (res.data.authToken_user) {
                 const authToken = res.data.authToken_user;

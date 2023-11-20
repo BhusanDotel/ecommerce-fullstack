@@ -7,3 +7,4 @@ export const fetchProductRoute = `${host}/api/products`;
 export const orderRoute = `${host}/api/order`;
 export const saveOrderRoute = `${host}/api/save`;
 export const deleteOrderRoute = `${host}/api/delete`;
+export const otpRoute = `${host}/api/otp`;

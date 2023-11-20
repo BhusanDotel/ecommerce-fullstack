@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+// import { useNavigation } from "react-router-dom";
 import "../styles/Register.css";
 import { registerRoute } from "../Utils/APIRoutes";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [isShaking, setShaking] = React.useState(false);
@@ -14,6 +16,7 @@ function Register() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const _userInfo = { ...userInfo };
@@ -50,11 +53,16 @@ function Register() {
           .then((res) => {
             if (res.data === "Email exists") {
               setSuccess(false);
-              setShaking(true);
+              startShake();
               setLoading(false);
             } else {
               setSuccess(true);
               setLoading(false);
+              setTimeout(() => {
+                navigate("/emailverification", {
+                  state: { email: email },
+                });
+              }, 1500);
             }
           });
       } catch (error) {
@@ -152,7 +160,7 @@ function Register() {
             <div className="registration-complete-div">
               {success === true && (
                 <p className="registration-complete-text">
-                  Registration Successfull <span className="reg-tick">✓</span>
+                  OTP sent <span className="reg-tick">✓</span>
                 </p>
               )}
             </div>

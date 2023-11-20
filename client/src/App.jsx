@@ -9,6 +9,7 @@ import Admindashboard from "./assets/pages/Admindashboard";
 import DisplayOrders from "./assets/components/Admin/DisplayOrders";
 import InputProducts from "./assets/components/Admin/InputProducts";
 import NoPageFound from "./assets/pages/NoPageFound";
+import EmailVerification from "./assets/pages/EmailVerification";
 import { StateContext } from "./assets/context/StateContext";
 import "./assets/styles/General.css";
 
@@ -33,6 +34,8 @@ function App() {
           path="products"
           element={isLoggedIn ? <Products /> : <Login />}
         />
+        <Route path="emailverification" element={<EmailVerification />} />
+
         <Route path="cart" element={isLoggedIn ? <Checkout /> : <Login />} />
 
         <Route

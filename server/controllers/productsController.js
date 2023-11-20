@@ -29,7 +29,7 @@ const uploadProductImage = async (req, res) => {
   if (name && price && stars && count && image_url) {
     const product = new ProductData({
       name: name,
-      price: price,
+      price: price * 100,
       rating: {
         stars: stars,
         count: count,
