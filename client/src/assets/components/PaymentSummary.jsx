@@ -77,6 +77,13 @@ function PaymentSummary() {
                   pNumber: "",
                   address: "",
                 });
+                setPrices({
+                  totalPrice: 0,
+                  deliveryHanlde: 0,
+                  totalBeforeTax: 0,
+                  taxAmout: 0,
+                  grandTotal: 0,
+                });
                 setLoading(false);
                 setButtonDisabled(false);
               } else {
