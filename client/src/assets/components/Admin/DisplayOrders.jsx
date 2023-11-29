@@ -10,7 +10,7 @@ function DisplayOrders() {
 
   React.useEffect(() => {
     async function fetchOrders() {
-      const response = await axios.get("http://localhost:3000/api/fetchOrders");
+      const response = await axios.get("http://localhost:3000/api/fetchorders");
       const data = response.data;
       if (response.data !== "No orders") {
         const count = data.length;
