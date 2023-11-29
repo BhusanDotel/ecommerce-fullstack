@@ -6,6 +6,7 @@ import { loginRoute } from "../Utils/APIRoutes";
 
 function Login() {
   const [isShaking, setShaking] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
   const [isUser, setUser] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({
     email: "",
@@ -36,6 +37,7 @@ function Login() {
   async function Login() {
     const { email, password } = userInfo;
     if (email !== "" && password !== "") {
+      setLoading(true);
       try {
         await axios
           .post(loginRoute, {
@@ -126,7 +128,11 @@ function Login() {
             </div>
             <div className="button-div">
               <button className="login-button" onClick={Login}>
-                LOGIN
+                {isLoading ? (
+                  <img className="loading-icon" src="/images/loading-gif.gif" />
+                ) : (
+                  "Login"
+                )}
               </button>
             </div>
             <div className="new-user-div">

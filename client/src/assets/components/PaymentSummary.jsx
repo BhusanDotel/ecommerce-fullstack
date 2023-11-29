@@ -9,9 +9,10 @@ import { orderRoute } from "../Utils/APIRoutes";
 function PaymentSummary() {
   const {
     cartData,
+    setCartData,
     totalQuantity,
     localStorageUpdate,
-    setlocalStorageUpdate,
+    setTotalQuantity,
     deliveryCost,
     userAuthToken,
   } = React.useContext(StateContext);
@@ -38,6 +39,8 @@ function PaymentSummary() {
     draggable: true,
     theme: "light",
   };
+  const [isLoading, setLoading] = React.useState(false);
+  const [isButtonDisabled, setButtonDisabled] = React.useState(false);
 
   function handleChange(e) {
     const _customerInfo = { ...customerInfo };
@@ -52,27 +55,37 @@ function PaymentSummary() {
       customerInfo.pNumber !== "" &&
       customerInfo.address !== ""
     ) {
-      try {
-        await axios
-          .post(orderRoute, {
-            cartData,
-            customerInfo,
-            userAuthToken,
-          })
-          .then((res) => {
-            if (res.data === "order entry success") {
-              toast.success("Order is successful", toastOptions);
-              setCustomerInfo({
-                fname: "",
-                lname: "",
-                pNumber: "",
-                address: "",
-              });
-            } else {
-              toast.error("Failed to order", toastOptions);
-            }
-          });
-      } catch (error) {}
+      if (cartData.length > 0) {
+        setLoading(true);
+        setButtonDisabled(true);
+        try {
+          await axios
+            .post(orderRoute, {
+              cartData,
+              customerInfo,
+              userAuthToken,
+            })
+            .then((res) => {
+              if (res.data === "order entry success") {
+                toast.success("Order is successful", toastOptions);
+                setCartData([]);
+                localStorage.removeItem("cartDataArray");
+                setTotalQuantity(0);
+                setCustomerInfo({
+                  fname: "",
+                  lname: "",
+                  pNumber: "",
+                  address: "",
+                });
+                setLoading(false);
+                setButtonDisabled(false);
+              } else {
+                toast.error("Failed to order", toastOptions);
+                setLoading(false);
+              }
+            });
+        } catch (error) {}
+      }
     } else {
       setFieldEmpty(true);
       setTimeout(() => {
@@ -197,9 +210,14 @@ function PaymentSummary() {
 
       <button
         onClick={placeOrder}
+        disabled={isButtonDisabled}
         className="place-order-button button-primary"
       >
-        Place your order
+        {isLoading ? (
+          <img className="loading-icon" src="/images/loading-gif.gif" />
+        ) : (
+          "Register"
+        )}
       </button>
       <ToastContainer></ToastContainer>
     </>
