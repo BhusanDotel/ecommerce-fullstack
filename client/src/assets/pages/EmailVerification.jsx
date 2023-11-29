@@ -26,6 +26,8 @@ function EmailVerification() {
           setTimeout(() => {
             navigate("/login");
           }, 1500);
+        } else if (res.data === "invalid otp") {
+          alert("Invalid OTP");
         }
       }
     });

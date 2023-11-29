@@ -1,5 +1,9 @@
 const cloudinary = require("../config/cloudinaryConfig");
 const ProductData = require("../models/productsModel");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const uploadMiddleware = upload.single("image");
+const fs = require("fs");
 
 let image_data;
 let image_url;
@@ -22,6 +26,10 @@ const uploadProductImage = async (req, res) => {
     });
     console.log("image uploaded");
     image_url = up_img.secure_url;
+
+    if (image_url) {
+      fs.unlinkSync(req.file.path);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -52,5 +60,6 @@ const fetchProducts = async (req, res) => {
 module.exports = {
   saveProductData,
   uploadProductImage,
+  uploadMiddleware,
   fetchProducts,
 };
