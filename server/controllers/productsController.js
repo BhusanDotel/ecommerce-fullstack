@@ -1,9 +1,15 @@
-const cloudinary = require("../config/cloudinaryConfig");
 const ProductData = require("../models/productsModel");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const uploadMiddleware = upload.single("image");
+require("dotenv").config();
 const fs = require("fs");
+
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: "kindimnata",
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 let image_data;
 let image_url;
@@ -13,6 +19,9 @@ const saveProductData = (req, res) => {
     image_data = req.body;
   }
 };
+
+const upload = multer({ dest: "uploads/" });
+const uploadMiddleware = upload.single("image");
 
 const uploadProductImage = async (req, res) => {
   const { name, price, rating } = image_data;
