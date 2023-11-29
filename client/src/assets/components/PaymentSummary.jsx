@@ -13,6 +13,7 @@ function PaymentSummary() {
     localStorageUpdate,
     setlocalStorageUpdate,
     deliveryCost,
+    userAuthToken,
   } = React.useContext(StateContext);
 
   const [prices, setPrices] = React.useState({
@@ -56,6 +57,7 @@ function PaymentSummary() {
           .post(orderRoute, {
             cartData,
             customerInfo,
+            userAuthToken,
           })
           .then((res) => {
             if (res.data === "order entry success") {

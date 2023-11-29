@@ -5,6 +5,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  userToken: {
+    type: String,
+    required: false,
+  },
+  adminToken: {
+    type: String,
+    required: false,
+  },
   firstName: {
     type: String,
     required: true,

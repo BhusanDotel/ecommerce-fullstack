@@ -8,7 +8,7 @@ import "../styles/Products/Products.css";
 import { fetchProductRoute } from "../Utils/APIRoutes";
 
 function Products() {
-  const { cartData, setlocalStorageUpdate, setCartData } =
+  const { cartData, setlocalStorageUpdate, setCartData, userAuthToken } =
     React.useContext(StateContext);
   const [ProductData, setProductData] = React.useState([]);
   const renderProductsArray = ProductData.map((product, index) => {
@@ -27,7 +27,7 @@ function Products() {
 
   React.useEffect(() => {
     async function fetchProducts() {
-      const response = await axios.get(fetchProductRoute);
+      const response = await axios.post(fetchProductRoute, { userAuthToken });
       const data = response.data;
       setProductData(data);
     }

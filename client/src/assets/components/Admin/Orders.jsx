@@ -3,9 +3,11 @@ import axios from "axios";
 import OrderProducts from "./OrderProducts";
 import { saveOrderRoute } from "../../Utils/APIRoutes";
 import { deleteOrderRoute } from "../../Utils/APIRoutes";
+import { StateContext } from "../../context/StateContext";
 import "../../styles/Admin/Orders.css";
 
 function Orders(props) {
+  const { adminAuthToken } = React.useContext(StateContext);
   const [totalCost, setTotalCost] = React.useState(0);
   const [totalDeliveryCost, setTotalDeliveryCost] = React.useState(0);
   const [taxAmount, setTaxAmount] = React.useState(0);
@@ -46,11 +48,13 @@ function Orders(props) {
   const orderId = props._id;
   async function Save() {
     try {
-      await axios.post(saveOrderRoute, { orderId }).then((res) => {
-        if (res.data === "order saved") {
-          location.reload();
-        }
-      });
+      await axios
+        .post(saveOrderRoute, { adminAuthToken, orderId })
+        .then((res) => {
+          if (res.data === "order saved") {
+            location.reload();
+          }
+        });
     } catch (error) {
       console.log(error);
     }
@@ -58,11 +62,13 @@ function Orders(props) {
 
   async function Delete() {
     try {
-      await axios.post(deleteOrderRoute, { orderId }).then((res) => {
-        if (res.data === "order deleted") {
-          location.reload();
-        }
-      });
+      await axios
+        .post(deleteOrderRoute, { adminAuthToken, orderId })
+        .then((res) => {
+          if (res.data === "order deleted") {
+            location.reload();
+          }
+        });
     } catch (error) {
       console.log(error);
     }

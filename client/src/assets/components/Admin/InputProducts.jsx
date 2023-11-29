@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import { productDataRoute, productImageRoute } from "../../Utils/APIRoutes";
 import "../../styles/Admin/InputProducts.css";
+import { StateContext } from "../../context/StateContext";
 
 function InputProducts() {
+  const { adminAuthToken } = React.useContext(StateContext);
   const [isDiplayMessage, setDisplayMessage] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [isResponse, setResponse] = React.useState(false);
@@ -45,27 +47,29 @@ function InputProducts() {
       const formData = new FormData();
       formData.append("image", selectedFile);
       try {
-        await axios.post(productDataRoute, { name, price, rating }).then(
-          axios.post(productImageRoute, formData).then((res) => {
-            if (res.data === "uploaded successfully") {
-              setResponse(true);
-              setGoodResponse(true);
-              setLoading(false);
-              detail.name = "";
-              detail.price = "";
-              setTimeout(() => {
+        await axios
+          .post(productDataRoute, { adminAuthToken, name, price, rating })
+          .then(
+            axios.post(productImageRoute, formData).then((res) => {
+              if (res.data === "uploaded successfully") {
+                setResponse(true);
+                setGoodResponse(true);
                 setLoading(false);
-                setDisplayMessage(false);
-                setResponse(false);
+                detail.name = "";
+                detail.price = "";
+                setTimeout(() => {
+                  setLoading(false);
+                  setDisplayMessage(false);
+                  setResponse(false);
+                  setGoodResponse(false);
+                }, 2000);
+              } else {
+                setResponse(true);
                 setGoodResponse(false);
-              }, 2000);
-            } else {
-              setResponse(true);
-              setGoodResponse(false);
-              setLoading(false);
-            }
-          })
-        );
+                setLoading(false);
+              }
+            })
+          );
       } catch (error) {
         setDisplayMessage(true);
         setResponse(true);

@@ -8,6 +8,6 @@ router.post(
   productController.uploadMiddleware,
   productController.uploadProductImage
 );
-router.get("/products", productController.fetchProducts);
+router.post("/products", productController.fetchProducts);
 
 module.exports = router;
