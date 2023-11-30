@@ -142,7 +142,6 @@
   align-items: center;
   margin-left: 5px;
   margin-right: 15px;
-  border: 1px solid black;
   position: relative;
 }
 .account:hover {
