@@ -94,10 +94,22 @@
 
 .place-order-button {
   width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding-top: 12px;
   padding-bottom: 12px;
   border-radius: 8px;
-
+  color: white;
   margin-top: 11px;
   margin-bottom: 15px;
+  background-color: black;
+}
+.place-order-button:hover {
+  cursor: pointer;
+  background-color: rgb(63, 62, 62);
+}
+.place-order-button:active {
+  transform: scale(0.9);
 }

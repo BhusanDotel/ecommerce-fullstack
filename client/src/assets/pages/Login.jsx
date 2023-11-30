@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import { loginRoute } from "../Utils/APIRoutes";
+import LoadingSVG from "../components/LoadingSVG";
 
 function Login() {
   const [isShaking, setShaking] = React.useState(false);
@@ -34,6 +35,12 @@ function Login() {
     }, 100);
   }
 
+  const handleKeyPressed = (e) => {
+    if (e.key === "Enter") {
+      Login();
+    }
+  };
+
   async function Login() {
     const { email, password } = userInfo;
     if (email !== "" && password !== "") {
@@ -48,6 +55,7 @@ function Login() {
             if (res.data === "not exists") {
               loginFail();
               startShake();
+              setLoading(false);
             } else if (res.data === "not verified") {
               alert("Email not verified");
               navigate("/emailverification", {
@@ -71,6 +79,8 @@ function Login() {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      alert("Fill all Fields!");
     }
   }
   return (
@@ -111,6 +121,7 @@ function Login() {
                 className="email-input"
                 name="email"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 type="email"
                 placeholder="Email"
               />
@@ -120,6 +131,7 @@ function Login() {
                 type="password"
                 name="password"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 placeholder="Password"
               />
             </div>
@@ -128,11 +140,7 @@ function Login() {
             </div>
             <div className="button-div">
               <button className="login-button" onClick={Login}>
-                {isLoading ? (
-                  <img className="loading-icon" src="/images/loading-gif.gif" />
-                ) : (
-                  "Login"
-                )}
+                {isLoading ? <LoadingSVG /> : "Login"}
               </button>
             </div>
             <div className="new-user-div">

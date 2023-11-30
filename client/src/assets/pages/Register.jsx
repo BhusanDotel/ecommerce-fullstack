@@ -4,6 +4,7 @@ import axios from "axios";
 import "../styles/Register.css";
 import { registerRoute } from "../Utils/APIRoutes";
 import { useNavigate } from "react-router-dom";
+import LoadingSVG from "../components/LoadingSVG";
 
 function Register() {
   const [isShaking, setShaking] = React.useState(false);
@@ -30,6 +31,12 @@ function Register() {
       setShaking(false);
     }, 100);
   }
+
+  const handleKeyPressed = (e) => {
+    if (e.key === "Enter") {
+      Register();
+    }
+  };
 
   async function Register() {
     const { fName, lName, address, email, password } = userInfo;
@@ -108,6 +115,7 @@ function Register() {
                 type="text"
                 placeholder="First Name"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 name="fName"
               />
               <input
@@ -115,6 +123,7 @@ function Register() {
                 type="text"
                 placeholder="Last Name"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 name="lName"
               />
               <input
@@ -123,12 +132,14 @@ function Register() {
                 placeholder="Address"
                 name="address"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
               />
               <input
                 className="reg-email-input"
                 type="email"
                 placeholder="Email"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 name="email"
               />
               <input
@@ -136,16 +147,13 @@ function Register() {
                 type="password"
                 placeholder="Password"
                 onChange={handleChange}
+                onKeyDown={handleKeyPressed}
                 name="password"
               />
             </div>
             <div className="reg-button-div">
               <button onClick={Register} className="reg-register-button">
-                {isLoading ? (
-                  <img className="loading-icon" src="/images/loading-gif.gif" />
-                ) : (
-                  "Register"
-                )}
+                {isLoading ? <LoadingSVG /> : "Register"}
               </button>
             </div>
             <div className="reg-already-user-div">

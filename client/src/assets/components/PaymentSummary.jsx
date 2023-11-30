@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../context/StateContext";
 import "../styles/Chcekout/PaymentSummar.css";
 import { orderRoute } from "../Utils/APIRoutes";
+import LoadingSVG from "./LoadingSVG";
 
 function PaymentSummary() {
   const {
@@ -47,6 +48,12 @@ function PaymentSummary() {
     _customerInfo[e.target.name] = e.target.value;
     setCustomerInfo(_customerInfo);
   }
+
+  const handleKeyPressed = (e) => {
+    if (e.key === "Enter") {
+      placeOrder();
+    }
+  };
 
   async function placeOrder() {
     if (
@@ -187,6 +194,7 @@ function PaymentSummary() {
             type="text"
             placeholder="FirstName*"
             onChange={handleChange}
+            onKeyDown={handleKeyPressed}
           />
           <input
             className="checkout-lname"
@@ -195,6 +203,7 @@ function PaymentSummary() {
             type="text"
             placeholder="LastName*"
             onChange={handleChange}
+            onKeyDown={handleKeyPressed}
           />
         </div>
         <input
@@ -204,6 +213,7 @@ function PaymentSummary() {
           className="checkout-phone"
           placeholder="PhoneNumber*"
           onChange={handleChange}
+          onKeyDown={handleKeyPressed}
         ></input>
         <input
           type="text"
@@ -212,19 +222,16 @@ function PaymentSummary() {
           className="checkout-address"
           placeholder="Address: district-City/tole/landmark*"
           onChange={handleChange}
+          onKeyDown={handleKeyPressed}
         ></input>
       </div>
 
       <button
         onClick={placeOrder}
         disabled={isButtonDisabled}
-        className="place-order-button button-primary"
+        className="place-order-button"
       >
-        {isLoading ? (
-          <img className="loading-icon" src="/images/loading-gif.gif" />
-        ) : (
-          "Register"
-        )}
+        {isLoading ? <LoadingSVG /> : "Register"}
       </button>
       <ToastContainer></ToastContainer>
     </>

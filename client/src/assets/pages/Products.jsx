@@ -6,11 +6,13 @@ import Product from "../components/Product";
 import { StateContext } from "../context/StateContext";
 import "../styles/Products/Products.css";
 import { fetchProductRoute } from "../Utils/APIRoutes";
+import LoadingScreen from "../components/LoadingScreen";
 
 function Products() {
   const { cartData, setlocalStorageUpdate, setCartData, userAuthToken } =
     React.useContext(StateContext);
   const [ProductData, setProductData] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(true);
   const renderProductsArray = ProductData.map((product, index) => {
     return (
       <Product
@@ -30,6 +32,7 @@ function Products() {
       const response = await axios.post(fetchProductRoute, { userAuthToken });
       const data = response.data;
       setProductData(data);
+      setLoading(false);
     }
     fetchProducts();
   }, []);
@@ -46,11 +49,16 @@ function Products() {
   return (
     <>
       <Nav />
-      <div className="home-main">
-        <div className="products-grid js-products-grid">
-          {renderProductsArray}
+
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <div className="home-main">
+          <div className="products-grid js-products-grid">
+            {renderProductsArray}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

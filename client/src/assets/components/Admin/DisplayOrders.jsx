@@ -3,6 +3,7 @@ import axios from "axios";
 import Orders from "./Orders";
 import { StateContext } from "../../context/StateContext";
 import { fetchOrderRoute } from "../../Utils/APIRoutes";
+import LoadingScreen from "../LoadingScreen";
 import "../../styles/Admin/DisplayOrders.css";
 
 function DisplayOrders() {
@@ -10,19 +11,39 @@ function DisplayOrders() {
   const [orderProduct, setOrderProduct] = React.useState("no orders");
   const [orderCount, setOrderCount] = React.useState(0);
   const [isProductsMissing, setProductsMissing] = React.useState(false);
+  const [trigger, setTrigger] = React.useState(0);
+  const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     async function fetchOrders() {
       const response = await axios.post(fetchOrderRoute, { adminAuthToken });
-      const data = response.data;
-      if (response.data !== "No orders") {
-        const count = data.length;
-        setOrderCount(count);
-        setOrderProduct(data);
-      } else setProductsMissing(true);
+      if (response) {
+        setLoading(false);
+        const data = response.data;
+        if (response.data !== "No orders") {
+          const count = data.length;
+          setOrderCount(count);
+          setOrderProduct(data);
+        } else {
+          setProductsMissing(true);
+          setOrderCount(0);
+          setOrderProduct([]);
+        }
+      }
     }
     fetchOrders();
-  }, []);
+  }, [trigger]);
+
+  const Save = () => {
+    setTrigger((prevCount) => {
+      return prevCount + 1;
+    });
+  };
+  const Delete = () => {
+    setTrigger((prevCount) => {
+      return prevCount + 1;
+    });
+  };
 
   let renderArray = [];
   if (orderProduct !== "no orders") {
@@ -33,6 +54,8 @@ function DisplayOrders() {
           _id={product._id}
           products={product.cartData[0]} //contains order products
           customer={product.cartData[1]} //contains customer details
+          saveButtonCLick={Save}
+          deleteButtonClick={Delete}
         />
       );
     });
@@ -40,9 +63,15 @@ function DisplayOrders() {
 
   return (
     <>
-      <h1 className="ordered-products-title">Ordered Products</h1>
-      <div className="admin-orders-container">{renderArray}</div>
-      {isProductsMissing && <p>No Orders, Sad!</p>}
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <h1 className="ordered-products-title">Ordered Products</h1>
+          <div className="admin-orders-container">{renderArray}</div>
+          {isProductsMissing && <p>No Orders, Sad!</p>}
+        </>
+      )}
     </>
   );
 }

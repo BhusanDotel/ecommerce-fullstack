@@ -1,17 +1,19 @@
 import React from "react";
 import axios from "axios";
 import OrderProducts from "./OrderProducts";
+import { StateContext } from "../../context/StateContext";
 import { saveOrderRoute } from "../../Utils/APIRoutes";
 import { deleteOrderRoute } from "../../Utils/APIRoutes";
-import { StateContext } from "../../context/StateContext";
 import "../../styles/Admin/Orders.css";
 
 function Orders(props) {
   const { adminAuthToken } = React.useContext(StateContext);
+  const [isSaving, setSaving] = React.useState(false);
+  const [isDeleting, setDeleting] = React.useState(false);
+  const [isButtonDisabled, setButtonDisabled] = React.useState(false);
   const [totalCost, setTotalCost] = React.useState(0);
   const [totalDeliveryCost, setTotalDeliveryCost] = React.useState(0);
   const [taxAmount, setTaxAmount] = React.useState(0);
-  const [count, setCount] = React.useState(0);
   const products = props.products;
   const renderArray = products.map((item, index) => {
     return (
@@ -47,12 +49,17 @@ function Orders(props) {
 
   const orderId = props._id;
   async function Save() {
+    const { saveButtonCLick } = props;
     try {
+      setSaving(true);
+      setButtonDisabled(true);
       await axios
         .post(saveOrderRoute, { adminAuthToken, orderId })
         .then((res) => {
           if (res.data === "order saved") {
-            location.reload();
+            saveButtonCLick();
+            setSaving(false);
+            setButtonDisabled(false);
           }
         });
     } catch (error) {
@@ -61,20 +68,22 @@ function Orders(props) {
   }
 
   async function Delete() {
+    const { deleteButtonClick } = props;
     try {
+      setDeleting(true);
+      setButtonDisabled(true);
       await axios
         .post(deleteOrderRoute, { adminAuthToken, orderId })
         .then((res) => {
           if (res.data === "order deleted") {
-            location.reload();
+            deleteButtonClick(orderId);
+            setDeleting(false);
+            setButtonDisabled(false);
           }
         });
     } catch (error) {
       console.log(error);
     }
-    setCount((prevState) => {
-      return prevState + 1;
-    });
   }
 
   return (
@@ -102,11 +111,19 @@ function Orders(props) {
           </p>
         </div>
         <div className="order-buttons-div">
-          <button onClick={Save} className="order-save-button">
-            Save
+          <button
+            onClick={Save}
+            disabled={isButtonDisabled}
+            className="order-save-button"
+          >
+            {isSaving ? "Saving...." : "Save"}
           </button>
-          <button onClick={Delete} className="order-delete-button">
-            Delete
+          <button
+            onClick={Delete}
+            disabled={isButtonDisabled}
+            className="order-delete-button"
+          >
+            {isDeleting ? "Deleting...." : "Delete"}
           </button>
         </div>
       </div>

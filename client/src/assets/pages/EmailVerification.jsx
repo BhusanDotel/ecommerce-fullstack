@@ -18,6 +18,12 @@ function EmailVerification() {
     setOtp(e.target.value);
   };
 
+  const handleKeyPressed = (e) => {
+    if (e.key === "Enter") {
+      handleClick();
+    }
+  };
+
   const handleClick = async () => {
     await axios.post(otpRoute, { email, otp }).then((res) => {
       if (res.data) {
@@ -51,6 +57,7 @@ function EmailVerification() {
             name="otp"
             value={otp}
             onChange={handleChange}
+            onKeyDown={handleKeyPressed}
             className="emailverify-input"
             type="text"
             placeholder="OTP"

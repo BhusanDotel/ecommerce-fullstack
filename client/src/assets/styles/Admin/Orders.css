@@ -113,9 +113,17 @@
 
 .order-delete-button {
   background-color: red;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .order-save-button {
   background-color: green;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .order-delete-button:active,
 .order-save-button:active {
