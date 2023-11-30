@@ -7,12 +7,15 @@ import { StateContext } from "../context/StateContext";
 import "../styles/Products/Products.css";
 import { fetchProductRoute } from "../Utils/APIRoutes";
 import LoadingScreen from "../components/LoadingScreen";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const { cartData, setlocalStorageUpdate, setCartData, userAuthToken } =
     React.useContext(StateContext);
   const [ProductData, setProductData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
+  const navigate = useNavigate();
+
   const renderProductsArray = ProductData.map((product, index) => {
     return (
       <Product
@@ -31,6 +34,10 @@ function Products() {
     async function fetchProducts() {
       const response = await axios.post(fetchProductRoute, { userAuthToken });
       const data = response.data;
+      if (data === "unauthorize excess") {
+        localStorage.clear();
+        navigate("/login");
+      }
       setProductData(data);
       setLoading(false);
     }

@@ -77,6 +77,8 @@ const fetchProducts = async (req, res) => {
         products.length > 0
           ? res.json(products)
           : res.json("no products found");
+      } else {
+        res.json("unauthorize excess");
       }
     }
   }

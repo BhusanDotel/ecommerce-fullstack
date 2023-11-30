@@ -231,7 +231,7 @@ function PaymentSummary() {
         disabled={isButtonDisabled}
         className="place-order-button"
       >
-        {isLoading ? <LoadingSVG /> : "Register"}
+        {isLoading ? <LoadingSVG /> : "Place Order"}
       </button>
       <ToastContainer></ToastContainer>
     </>
