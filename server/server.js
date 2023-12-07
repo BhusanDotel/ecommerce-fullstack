@@ -27,6 +27,11 @@ app.use("/api", productRoutes);
 app.use("/api", authRoutes);
 app.use("/api", orderRoutes);
 
+//to check status of server
+app.get("/status", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.listen(PORT, () => {
   console.log("App listening on port 3000!");
 });
