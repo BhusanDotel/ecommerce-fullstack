@@ -9,5 +9,6 @@ router.post(
   productController.uploadProductImage
 );
 router.post("/products", productController.fetchProducts);
+router.post("/singleProduct", productController.fetchSingleProduct);
 
 module.exports = router;

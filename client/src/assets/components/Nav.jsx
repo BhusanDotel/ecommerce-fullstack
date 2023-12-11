@@ -20,8 +20,8 @@ function Nav() {
     <div className="home-header">
       <div className="home-header-left-section">
         <a href="/" className="header-link">
-          <img className="home-logo" src="images/logo.png" />
-          <img className="home-mobile-logo" src="images/logo-mobile.png" />
+          <img className="home-logo" src="/images/logo.png" />
+          <img className="home-mobile-logo" src="/images/logo-mobile.png" />
         </a>
       </div>
 
@@ -29,18 +29,18 @@ function Nav() {
         <input className="search-bar" type="text" placeholder="Search" />
 
         <button className="search-button">
-          <img className="search-icon" src="images/icons/search-icon.png" />
+          <img className="search-icon" src="/images/icons/search-icon.png" />
         </button>
       </div>
 
       <div className="home-header-right-section">
         <a className="cart-link header-link js-cart-link" href="/checkout">
-          <img className="cart-icon" src="images/icons/cart-icon.png" />
+          <img className="cart-icon" src="/images/icons/cart-icon.png" />
           <div className="cart-quantity js-cart-quantity">{totalQuantity}</div>
           <div className="cart-text">Cart</div>
         </a>
         <div className="account" onClick={toggleMenu}>
-          <img className="account-icon" src="images/account.png" />
+          <img className="account-icon" src="/images/account.png" />
         </div>
         {showMenu && (
           <div style={{ display: "block" }} className="menu-items">

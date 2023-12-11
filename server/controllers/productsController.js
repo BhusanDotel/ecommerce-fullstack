@@ -25,9 +25,8 @@ const upload = multer({ dest: "uploads/" });
 const uploadMiddleware = upload.single("image");
 
 const uploadProductImage = async (req, res) => {
-  const { name, price, rating, adminAuthToken } = image_data;
-  if (name && price && rating && adminAuthToken) {
-    const { stars, count } = rating;
+  const { name, price, adminAuthToken } = image_data;
+  if (name && price && adminAuthToken) {
     const isAdmin = await UserData.findOne({ adminToken: adminAuthToken });
     if (isAdmin) {
       if (!req.file) {
@@ -47,14 +46,25 @@ const uploadProductImage = async (req, res) => {
         console.log(error);
       }
 
-      if (name && price && stars && count && image_url) {
+      if (name && price && image_url) {
         const product = new ProductData({
           name: name,
           price: price * 100,
           rating: {
-            stars: stars,
-            count: count,
+            raters: [],
+            totalStars: 0,
+            stars: 0,
+            count: 0,
           },
+          description: name,
+          review: [
+            {
+              email: "bhusandotel1@gmail.com",
+              reviewer: "Bhusan",
+              review: "very good product 3 ",
+            },
+          ],
+          trueCustomers: [],
           image: {
             img_name: name,
             source: image_url,
@@ -84,9 +94,27 @@ const fetchProducts = async (req, res) => {
   }
 };
 
+const fetchSingleProduct = async (req, res) => {
+  if (req.body) {
+    const { productid, userAuthToken } = req.body;
+    if (productid && userAuthToken) {
+      const isUser = await UserData.findOne({ userToken: userAuthToken });
+      if (isUser) {
+        const product = await ProductData.findOne({ _id: productid });
+        if (product) {
+          res.json(product);
+        }
+      } else {
+        res.json("unauthorize excess");
+      }
+    }
+  }
+};
+
 module.exports = {
   saveProductData,
   uploadProductImage,
   uploadMiddleware,
   fetchProducts,
+  fetchSingleProduct,
 };

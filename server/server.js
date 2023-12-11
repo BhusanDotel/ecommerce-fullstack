@@ -6,6 +6,7 @@ const app = express();
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const ratingReviewRoutes = require("./routes/RatingReviewRoutes");
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
@@ -26,6 +27,7 @@ app.use("/api/admin", productRoutes);
 app.use("/api", productRoutes);
 app.use("/api", authRoutes);
 app.use("/api", orderRoutes);
+app.use("/api", ratingReviewRoutes);
 
 //to check status of server
 app.get("/status", (req, res) => {

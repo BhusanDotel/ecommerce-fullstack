@@ -8,6 +8,7 @@ import Checkout from "./assets/pages/Checkout";
 import Admindashboard from "./assets/pages/Admindashboard";
 import DisplayOrders from "./assets/components/Admin/DisplayOrders";
 import InputProducts from "./assets/components/Admin/InputProducts";
+import Product from "./assets/pages/Product";
 import NoPageFound from "./assets/pages/NoPageFound";
 import EmailVerification from "./assets/pages/EmailVerification";
 import { StateContext } from "./assets/context/StateContext";
@@ -33,6 +34,10 @@ function App() {
         <Route
           path="products"
           element={isLoggedIn ? <Products /> : <Login />}
+        />
+        <Route
+          path="/products/:productid"
+          element={isLoggedIn ? <Product /> : <Login />}
         />
         <Route path="emailverification" element={<EmailVerification />} />
 

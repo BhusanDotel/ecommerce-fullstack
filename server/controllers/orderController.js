@@ -1,6 +1,7 @@
 const orderData = require("../models/orderModel");
 const deliveryData = require("../models/deliverModel");
 const UserData = require("../models/userModel");
+const ProductData = require("../models/productsModel");
 
 const order = async (req, res) => {
   if (req.body) {
@@ -57,6 +58,23 @@ const saveOrders = async (req, res) => {
         if (isAdmin) {
           const orderProduct = await orderData.find({ _id: orderId });
           if (orderProduct) {
+            const trueCustomerEmail = orderProduct[0].cartData[1].email;
+            if (trueCustomerEmail) {
+              console.log(trueCustomerEmail);
+              const orderedProductsIDs = orderProduct[0].cartData[0];
+              orderedProductsIDs.forEach(async (item) => {
+                const orderedproducts = await ProductData.findOne({
+                  _id: item._id,
+                });
+                if (
+                  !orderedproducts.trueCustomers.includes(trueCustomerEmail)
+                ) {
+                  orderedproducts.trueCustomers.push(trueCustomerEmail);
+                }
+                orderedproducts.markModified("trueCustomers");
+                await orderedproducts.save();
+              });
+            }
             const _deliveryData = [];
             _deliveryData.push(orderProduct);
             if (_deliveryData.length !== 0) {

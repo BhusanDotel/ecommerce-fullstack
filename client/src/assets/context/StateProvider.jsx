@@ -12,6 +12,9 @@ export const StateProvider = (props) => {
   const [isAdmin, setAdmin] = React.useState(false);
   const [userAuthToken, setUserAuthToken] = React.useState("");
   const [adminAuthToken, setAdminAuthToken] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
 
   React.useEffect(() => {
     const cartDataArray = JSON.parse(localStorage.getItem("cartDataArray"));
@@ -49,6 +52,20 @@ export const StateProvider = (props) => {
       setAdmin(true);
       setAdminAuthToken(authToken_admin);
     }
+
+    const fName = localStorage.getItem("firstName");
+    if (fName) {
+      setFirstName(fName);
+    }
+    const lName = localStorage.getItem("lastName");
+    if (lName) {
+      setLastName(lName);
+    }
+
+    const _email = localStorage.getItem("email");
+    if (_email) {
+      setEmail(_email);
+    }
   }, [localStorageUpdate]);
 
   return (
@@ -69,6 +86,9 @@ export const StateProvider = (props) => {
         setUserAuthToken,
         adminAuthToken,
         setAdminAuthToken,
+        firstName,
+        lastName,
+        email,
       }}
     >
       {props.children}

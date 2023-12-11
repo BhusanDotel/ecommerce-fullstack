@@ -14,10 +14,14 @@ const productSchema = new mongoose.Schema({
     source: String,
   },
   rating: {
+    raters: mongoose.Schema.Types.Mixed,
+    totalStars: {
+      type: Number,
+    },
     stars: {
       type: Number,
       required: true,
-      min: 1,
+      min: 0,
       max: 5,
     },
     count: {
@@ -25,6 +29,11 @@ const productSchema = new mongoose.Schema({
       required: true,
     },
   },
+  description: {
+    type: String,
+  },
+  review: mongoose.Schema.Types.Mixed,
+  trueCustomers: mongoose.Schema.Types.Mixed,
 });
 
 const ProductData = mongoose.model("Products", productSchema);

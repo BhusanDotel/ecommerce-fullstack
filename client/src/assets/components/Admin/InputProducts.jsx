@@ -17,10 +17,6 @@ function InputProducts() {
   const [detail, setDetail] = React.useState({
     name: "",
     price: "",
-    rating: {
-      stars: 1,
-      count: 1,
-    },
   });
 
   function handleImage(e) {
@@ -40,7 +36,7 @@ function InputProducts() {
   }
 
   const uploadData = async () => {
-    const { name, price, rating } = detail;
+    const { name, price } = detail;
     if (selectedFile && name && price) {
       setDisplayMessage(true);
       setLoading(true);
@@ -48,7 +44,7 @@ function InputProducts() {
       formData.append("image", selectedFile);
       try {
         await axios
-          .post(productDataRoute, { adminAuthToken, name, price, rating })
+          .post(productDataRoute, { adminAuthToken, name, price })
           .then(
             axios.post(productImageRoute, formData).then((res) => {
               if (res.data === "uploaded successfully") {

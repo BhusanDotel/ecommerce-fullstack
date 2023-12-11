@@ -86,7 +86,13 @@ const login = async (req, res) => {
                 emailExists.userToken = admin_token;
                 emailExists.adminToken = admin_token;
                 await emailExists.save();
-                return res.json({ authToken_admin: admin_token });
+                return res.json({
+                  admin: {
+                    authToken_admin: admin_token,
+                    firstName: emailExists.firstName,
+                    lastName: emailExists.lastName,
+                  },
+                });
               } else {
                 const uId = {
                   id: emailExists._id,
@@ -94,7 +100,14 @@ const login = async (req, res) => {
                 const user_token = jwt.sign(uId, secretKey);
                 emailExists.userToken = user_token;
                 await emailExists.save();
-                return res.json({ authToken_user: user_token });
+                // return res.json({ authToken_user: user_token });
+                return res.json({
+                  user: {
+                    authToken_user: user_token,
+                    firstName: emailExists.firstName,
+                    lastName: emailExists.lastName,
+                  },
+                });
               }
             } else {
               res.send("not exists");

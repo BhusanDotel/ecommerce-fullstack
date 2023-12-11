@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { getDate } from "../service/Date";
 import "../styles/Products/Product.css";
 
 function Product(props) {
   const [isAdded, setAdded] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
+  const navigate = useNavigate();
 
   let timeoutId;
   function showAddedMsg() {
@@ -49,10 +51,15 @@ function Product(props) {
     //to send cartData
     props.getCartData(cartData);
   }
+
+  const Product = () => {
+    navigate(`/products/${props.id}`);
+  };
+
   return (
     <div>
       <div className="product-container">
-        <div className="product-image-container">
+        <div onClick={Product} className="product-image-container">
           <img className="product-image" src={props.image.source} />
         </div>
 

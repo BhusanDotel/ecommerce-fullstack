@@ -62,15 +62,25 @@ function Login() {
                 state: { email: email },
               });
             } else {
-              if (res.data.authToken_user) {
-                const authToken = res.data.authToken_user;
+              if (res.data.user) {
+                const authToken = res.data.user.authToken_user;
+                const firstName = res.data.user.firstName;
+                const lastName = res.data.user.lastName;
                 localStorage.setItem("authToken_user", authToken);
+                localStorage.setItem("firstName", firstName);
+                localStorage.setItem("lastName", lastName);
+                localStorage.setItem("email", email);
                 navigate("/");
                 location.reload();
-              } else if (res.data.authToken_admin) {
-                const authToken = res.data.authToken_admin;
+              } else if (res.data.admin) {
+                const authToken = res.data.admin.authToken_admin;
+                const firstName = res.data.admin.firstName;
+                const lastName = res.data.admin.lastName;
                 localStorage.setItem("authToken_admin", authToken);
                 localStorage.setItem("authToken_user", authToken);
+                localStorage.setItem("firstName", firstName);
+                localStorage.setItem("lastName", lastName);
+                localStorage.setItem("email", email);
                 navigate("/admin-dashboard");
                 location.reload();
               }
@@ -85,7 +95,7 @@ function Login() {
   }
   return (
     <div className="login-root">
-      <img className="logo" src="images/logo-f.png" />
+      <img className="logo" src="/images/logo-f.png" />
       <div className="div-to-flex">
         <div className={`login-main ${isShaking ? "shake" : ""}`}>
           <div className="logo-div">
@@ -93,12 +103,12 @@ function Login() {
               <p className="logo-text">KINDIM NA TA</p>
             </div>
             <div className="logo-section">
-              <img className="mini-logo" src="images/logo-f.png" />
+              <img className="mini-logo" src="/images/logo-f.png" />
             </div>
           </div>
           <div className="container">
             <div className="image-div">
-              <img className="bottles-img" src="images/bottles.png" />
+              <img className="bottles-img" src="/images/bottles.png" />
             </div>
             <div className="login-text-div">
               <p className="login-text">Login Now</p>
@@ -116,7 +126,7 @@ function Login() {
               )}
             </div>
             <div className="input-div">
-              <img className="email-icon" src="images/email-icon.jpg" />
+              <img className="email-icon" src="/images/email-icon.jpg" />
               <input
                 className="email-input"
                 name="email"
@@ -125,7 +135,7 @@ function Login() {
                 type="email"
                 placeholder="Email"
               />
-              <img className="password-icon" src="images/password-icon.png" />
+              <img className="password-icon" src="/images/password-icon.png" />
               <input
                 className="password-input"
                 type="password"

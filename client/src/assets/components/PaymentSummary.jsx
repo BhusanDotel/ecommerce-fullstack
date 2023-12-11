@@ -16,6 +16,9 @@ function PaymentSummary() {
     setTotalQuantity,
     deliveryCost,
     userAuthToken,
+    firstName,
+    lastName,
+    email,
   } = React.useContext(StateContext);
 
   const [prices, setPrices] = React.useState({
@@ -26,8 +29,9 @@ function PaymentSummary() {
     grandTotal: 0,
   });
   const [customerInfo, setCustomerInfo] = React.useState({
-    fname: "",
-    lname: "",
+    fname: firstName,
+    lname: lastName,
+    email: email,
     pNumber: "",
     address: "",
   });
@@ -60,7 +64,8 @@ function PaymentSummary() {
       customerInfo.fname !== "" &&
       customerInfo.lname !== "" &&
       customerInfo.pNumber !== "" &&
-      customerInfo.address !== ""
+      customerInfo.address !== "" &&
+      email
     ) {
       if (cartData.length > 0) {
         setLoading(true);
