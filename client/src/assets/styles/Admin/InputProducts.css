@@ -18,7 +18,9 @@
   border-radius: 10px;
 }
 .admin-input-price,
+.admin-input-description,
 .admin-input-productName,
+.admin-input-quantity,
 .admin-input-image {
   width: 100%;
   box-sizing: border-box;
@@ -26,10 +28,16 @@
   border-radius: 5px;
   height: 30px;
 }
+.admin-input-description {
+  height: 100px;
+  font-family: roboto;
+  resize: none;
+}
 .admin-input-image {
   border: none;
   padding-left: 1px;
 }
+.admin-input-description::placeholder,
 .admin-input-price::placeholder,
 .admin-input-productName::placeholder,
 .admin-input-image::placeholder {

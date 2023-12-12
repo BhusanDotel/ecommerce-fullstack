@@ -7,22 +7,58 @@ const order = async (req, res) => {
   if (req.body) {
     const { cartData, customerInfo, userAuthToken } = req.body;
     if (cartData && customerInfo && userAuthToken) {
-      try {
-        const isUser = await UserData.findOne({ userToken: userAuthToken });
-        if (isUser) {
-          let cart = [];
-          cart.push(cartData);
-          cart.push(customerInfo);
-          if (cart.length !== 0) {
-            const orderdata = new orderData({
-              cartData: cart,
-            });
-            await orderdata.save();
-            res.json("order entry success");
+      let cartProductQuantities = [];
+      await Promise.all(
+        cartData.map(async (items) => {
+          const productId = items._id;
+          const productExists = await ProductData.findOne({ _id: productId });
+
+          if (productExists) {
+            cartProductQuantities.push(productExists.quantity); //this array contains orderquantities
           }
+        })
+      );
+      if (!cartProductQuantities.includes(0)) {
+        //if any element in array is 0, means that product is out of stock
+        let cartDataProductQuantityList = [];
+        cartData.forEach((prodectObject) => {
+          const cartDataProductQuantityObj = {
+            Id: prodectObject._id,
+            quantity: prodectObject.quantity,
+          };
+          cartDataProductQuantityList.push(cartDataProductQuantityObj);
+        });
+        for (let i = 0; i < cartDataProductQuantityList.length; i++) {
+          const productExists = await ProductData.findOne({
+            _id: cartDataProductQuantityList[i].Id,
+          });
+          productExists.quantity =
+            productExists.quantity - cartDataProductQuantityList[i].quantity;
+          productExists.markModified("quantity");
+          await productExists.save();
         }
-      } catch (error) {
-        res.json("order entry fail");
+
+        try {
+          const isUser = await UserData.findOne({
+            userToken: userAuthToken,
+          });
+          if (isUser) {
+            let cart = [];
+            cart.push(cartData);
+            cart.push(customerInfo);
+            if (cart.length !== 0) {
+              const orderdata = new orderData({
+                cartData: cart,
+              });
+              await orderdata.save();
+              res.json("order entry success");
+            }
+          }
+        } catch (error) {
+          res.json("order entry fail");
+        }
+      } else {
+        res.json("Product out of stock");
       }
     }
   }
@@ -60,7 +96,6 @@ const saveOrders = async (req, res) => {
           if (orderProduct) {
             const trueCustomerEmail = orderProduct[0].cartData[1].email;
             if (trueCustomerEmail) {
-              console.log(trueCustomerEmail);
               const orderedProductsIDs = orderProduct[0].cartData[0];
               orderedProductsIDs.forEach(async (item) => {
                 const orderedproducts = await ProductData.findOne({
@@ -104,6 +139,16 @@ const deleteOrders = async (req, res) => {
         });
         if (isAdmin) {
           const deleteCartData = await orderData.findOneAndDelete(orderId);
+          const orderedProductList = deleteCartData.cartData[0];
+          for (let i = 0; i < orderedProductList.length; i++) {
+            const productExists = await ProductData.findOne({
+              _id: orderedProductList[i]._id,
+            });
+            productExists.quantity =
+              productExists.quantity + orderedProductList[i].quantity;
+            productExists.markModified("quantity");
+            await productExists.save();
+          }
           if (deleteCartData) {
             res.json("order deleted");
           } else {

@@ -342,7 +342,7 @@ function Product() {
 
                   <fieldset className="singleproduct-description">
                     <legend className="description-legend">Description</legend>
-                    Jack daniel is very good whiskey
+                    {productInfo.description}
                   </fieldset>
                 </div>
                 <div className="singleproduct-review-root">

@@ -42,7 +42,7 @@ function PaymentSummary() {
     autoClose: 4000,
     pauseOnHover: true,
     draggable: true,
-    theme: "light",
+    theme: "colored",
   };
   const [isLoading, setLoading] = React.useState(false);
   const [isButtonDisabled, setButtonDisabled] = React.useState(false);
@@ -99,7 +99,7 @@ function PaymentSummary() {
                 setLoading(false);
                 setButtonDisabled(false);
               } else {
-                toast.error("Failed to order", toastOptions);
+                toast.error(res.data, toastOptions);
                 setLoading(false);
               }
             });

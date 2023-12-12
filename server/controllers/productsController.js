@@ -25,7 +25,7 @@ const upload = multer({ dest: "uploads/" });
 const uploadMiddleware = upload.single("image");
 
 const uploadProductImage = async (req, res) => {
-  const { name, price, adminAuthToken } = image_data;
+  const { name, price, quantity, description, adminAuthToken } = image_data;
   if (name && price && adminAuthToken) {
     const isAdmin = await UserData.findOne({ adminToken: adminAuthToken });
     if (isAdmin) {
@@ -46,7 +46,7 @@ const uploadProductImage = async (req, res) => {
         console.log(error);
       }
 
-      if (name && price && image_url) {
+      if (name && price && quantity && description && image_url) {
         const product = new ProductData({
           name: name,
           price: price * 100,
@@ -56,14 +56,9 @@ const uploadProductImage = async (req, res) => {
             stars: 0,
             count: 0,
           },
-          description: name,
-          review: [
-            {
-              email: "bhusandotel1@gmail.com",
-              reviewer: "Bhusan",
-              review: "very good product 3 ",
-            },
-          ],
+          quantity: quantity,
+          description: description,
+          review: [],
           trueCustomers: [],
           image: {
             img_name: name,

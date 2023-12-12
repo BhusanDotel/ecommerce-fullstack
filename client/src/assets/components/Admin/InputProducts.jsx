@@ -17,6 +17,8 @@ function InputProducts() {
   const [detail, setDetail] = React.useState({
     name: "",
     price: "",
+    quantity: "",
+    description: "",
   });
 
   function handleImage(e) {
@@ -36,15 +38,21 @@ function InputProducts() {
   }
 
   const uploadData = async () => {
-    const { name, price } = detail;
-    if (selectedFile && name && price) {
+    const { name, price, quantity, description } = detail;
+    if (selectedFile && name && price && quantity && description) {
       setDisplayMessage(true);
       setLoading(true);
       const formData = new FormData();
       formData.append("image", selectedFile);
       try {
         await axios
-          .post(productDataRoute, { adminAuthToken, name, price })
+          .post(productDataRoute, {
+            adminAuthToken,
+            name,
+            price,
+            quantity,
+            description,
+          })
           .then(
             axios.post(productImageRoute, formData).then((res) => {
               if (res.data === "uploaded successfully") {
@@ -53,12 +61,14 @@ function InputProducts() {
                 setLoading(false);
                 detail.name = "";
                 detail.price = "";
-                setTimeout(() => {
-                  setLoading(false);
-                  setDisplayMessage(false);
-                  setResponse(false);
-                  setGoodResponse(false);
-                }, 2000);
+                (detail.description = ""),
+                  (detail.quantity = ""),
+                  setTimeout(() => {
+                    setLoading(false);
+                    setDisplayMessage(false);
+                    setResponse(false);
+                    setGoodResponse(false);
+                  }, 2000);
               } else {
                 setResponse(true);
                 setGoodResponse(false);
@@ -97,6 +107,22 @@ function InputProducts() {
             className="admin-input-price"
             placeholder="price*"
           ></input>
+          <input
+            type="number"
+            name="quantity"
+            onChange={handleChange}
+            value={detail.quantity}
+            className="admin-input-quantity"
+            placeholder="Quantity*"
+          ></input>
+          <textarea
+            type="text"
+            name="description"
+            onChange={handleChange}
+            value={detail.description}
+            className="admin-input-description"
+            placeholder="Description*"
+          ></textarea>
           <input
             className="admin-input-image"
             onChange={handleImage}
