@@ -36,7 +36,6 @@ const uploadProductImage = async (req, res) => {
         const up_img = await cloudinary.uploader.upload(req.file.path, {
           public_id: name,
         });
-        console.log("image uploaded");
         image_url = up_img.secure_url;
 
         if (image_url) {

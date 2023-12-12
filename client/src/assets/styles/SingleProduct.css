@@ -11,6 +11,33 @@
   height: 550px;
   justify-content: center;
 }
+
+.singleproduct-quantity-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+.singleproduct-quantity-container.limitedstock {
+  background-color: rgb(224, 254, 0);
+  color: rgb(0, 0, 0);
+  width: 100px;
+}
+
+.singleproduct-quantity-container.instock {
+  background-color: rgb(2, 149, 0);
+  color: rgb(255, 255, 255);
+  width: 60px;
+}
+
+.singleproduct-quantity-container.outstock {
+  background-color: rgb(136, 5, 1);
+  color: rgb(255, 255, 255);
+  width: 100px;
+}
+
 .singleproduct-image {
   height: 500px;
   width: 250px;

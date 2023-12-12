@@ -59,6 +59,21 @@ function Product(props) {
   return (
     <div>
       <div className="product-container">
+        <div
+          className={`product-quantity-status-container ${
+            props.quantity > 0 && props.quantity <= 5
+              ? "limitedstock"
+              : props.quantity > 5
+              ? "instock"
+              : "outstock"
+          }`}
+        >
+          {props.quantity > 0 && props.quantity <= 5
+            ? "Limited stock"
+            : props.quantity > 5
+            ? "In stock"
+            : "Out of stock"}
+        </div>
         <div onClick={Product} className="product-image-container">
           <img className="product-image" src={props.image.source} />
         </div>
@@ -106,12 +121,18 @@ function Product(props) {
           Added
         </div>
 
-        <button
-          onClick={addToCart}
-          className="add-to-cart-button button-primary"
-        >
-          Add to Cart
-        </button>
+        {props.quantity > 0 ? (
+          <button
+            onClick={addToCart}
+            className="add-to-cart-button button-primary"
+          >
+            Add to Cart
+          </button>
+        ) : (
+          <button className="add-to-cart-button button-primary add-to-cart-disable">
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );

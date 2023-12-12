@@ -25,6 +25,7 @@ function Products() {
         name={product.name}
         rating={product.rating}
         price={product.price}
+        quantity={product.quantity}
         getCartData={recieveData}
       />
     );

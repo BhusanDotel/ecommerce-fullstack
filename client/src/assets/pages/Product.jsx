@@ -204,6 +204,23 @@ function Product() {
                 </div>
                 <div className="singleproduct-product-info">
                   <h1 className="singleproduct-name">{productInfo.name}</h1>
+
+                  <div
+                    className={`singleproduct-quantity-container ${
+                      productInfo.quantity > 0 && productInfo.quantity <= 5
+                        ? "limitedstock"
+                        : productInfo.quantity > 5
+                        ? "instock"
+                        : "outstock"
+                    }`}
+                  >
+                    {productInfo.quantity > 0 && productInfo.quantity <= 5
+                      ? "Limited stock"
+                      : productInfo.quantity > 5
+                      ? "In stock"
+                      : "Out of stock"}
+                  </div>
+
                   <h4 className="singleproduct-price">
                     Price: Rs {productInfo.price / 100}
                   </h4>
