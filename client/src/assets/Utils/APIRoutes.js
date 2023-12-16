@@ -1,5 +1,5 @@
-export const host = "http://localhost:3000";
-// export const host = "https://kindimnata.onrender.com";
+// export const host = "http://localhost:3000";
+export const host = "https://kindimnata.onrender.com";
 export const productDataRoute = `${host}/api/admin/productdata`;
 export const productImageRoute = `${host}/api/admin/productimage`;
 export const loginRoute = `${host}/api/login`;
