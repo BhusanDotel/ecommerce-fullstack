@@ -143,9 +143,7 @@ function Product() {
     };
 
     function trigger() {
-      setTimeout(() => {
-        setTrigger((prevCount) => prevCount + 1);
-      }, 10000);
+      setTrigger((prevCount) => prevCount + 1);
     }
 
     socket.on("receive_review", handleReceiveReview);
