@@ -32,30 +32,33 @@ const order = async (req, res) => {
           const productExists = await ProductData.findOne({
             _id: cartDataProductQuantityList[i].Id,
           });
-          productExists.quantity =
-            productExists.quantity - cartDataProductQuantityList[i].quantity;
-          productExists.markModified("quantity");
-          await productExists.save();
-        }
-
-        try {
-          const isUser = await UserData.findOne({
-            userToken: userAuthToken,
-          });
-          if (isUser) {
-            let cart = [];
-            cart.push(cartData);
-            cart.push(customerInfo);
-            if (cart.length !== 0) {
-              const orderdata = new orderData({
-                cartData: cart,
+          if (
+            productExists.quantity >= cartDataProductQuantityList[i].quantity
+          ) {
+            productExists.quantity =
+              productExists.quantity - cartDataProductQuantityList[i].quantity;
+            productExists.markModified("quantity");
+            await productExists.save();
+            try {
+              const isUser = await UserData.findOne({
+                userToken: userAuthToken,
               });
-              await orderdata.save();
-              res.json("order entry success");
+              if (isUser) {
+                let cart = [];
+                cart.push(cartData);
+                cart.push(customerInfo);
+                if (cart.length !== 0) {
+                  const orderdata = new orderData({
+                    cartData: cart,
+                  });
+                  await orderdata.save();
+                  res.json("order entry success");
+                }
+              }
+            } catch (error) {
+              res.json("order entry fail");
             }
           }
-        } catch (error) {
-          res.json("order entry fail");
         }
       } else {
         res.json("Product out of stock");

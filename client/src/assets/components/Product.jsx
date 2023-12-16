@@ -46,6 +46,7 @@ function Product(props) {
       price: props.price,
       orderDate: timeAndDate(),
       quantity: quantity,
+      availableQuantity: props.quantity,
       image: props.image.source,
     };
     //to send cartData
@@ -55,6 +56,18 @@ function Product(props) {
   const Product = () => {
     navigate(`/products/${props.id}`);
   };
+
+  let quantitySelectionRenderarray = [];
+  if (props.quantity) {
+    for (let i = 1; i <= (props.quantity < 10 ? props.quantity : 10); i++) {
+      const selectionOption = (
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+      quantitySelectionRenderarray.push(selectionOption);
+    }
+  }
 
   return (
     <div>
@@ -94,16 +107,13 @@ function Product(props) {
 
         <div className="product-quantity-container">
           <select name="quantity" onChange={handleQuantity} value={quantity}>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-            <option value={9}>9</option>
-            <option value={10}>10</option>
+            {props.quantity ? (
+              quantitySelectionRenderarray
+            ) : (
+              <option key={0} value={0}>
+                0
+              </option>
+            )}
           </select>
         </div>
 

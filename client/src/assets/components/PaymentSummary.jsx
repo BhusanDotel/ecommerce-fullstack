@@ -60,6 +60,14 @@ function PaymentSummary() {
   };
 
   async function placeOrder() {
+    let doSend = false;
+    if (cartData.length > 0) {
+      cartData.forEach((product) => {
+        if (product.availableQuantity >= product.quantity) {
+          doSend = true;
+        }
+      });
+    }
     if (
       customerInfo.fname !== "" &&
       customerInfo.lname !== "" &&
@@ -70,40 +78,49 @@ function PaymentSummary() {
       if (cartData.length > 0) {
         setLoading(true);
         setButtonDisabled(true);
-        try {
-          await axios
-            .post(orderRoute, {
-              cartData,
-              customerInfo,
-              userAuthToken,
-            })
-            .then((res) => {
-              if (res.data === "order entry success") {
-                toast.success("Order is successful", toastOptions);
-                setCartData([]);
-                localStorage.removeItem("cartDataArray");
-                setTotalQuantity(0);
-                setCustomerInfo({
-                  fname: "",
-                  lname: "",
-                  pNumber: "",
-                  address: "",
-                });
-                setPrices({
-                  totalPrice: 0,
-                  deliveryHanlde: 0,
-                  totalBeforeTax: 0,
-                  taxAmout: 0,
-                  grandTotal: 0,
-                });
-                setLoading(false);
-                setButtonDisabled(false);
-              } else {
-                toast.error(res.data, toastOptions);
-                setLoading(false);
-              }
-            });
-        } catch (error) {}
+        if (doSend) {
+          try {
+            await axios
+              .post(orderRoute, {
+                cartData,
+                customerInfo,
+                userAuthToken,
+              })
+              .then((res) => {
+                if (res.data === "order entry success") {
+                  toast.success("Order is successful", toastOptions);
+                  setCartData([]);
+                  localStorage.removeItem("cartDataArray");
+                  setTotalQuantity(0);
+                  setCustomerInfo({
+                    fname: "",
+                    lname: "",
+                    pNumber: "",
+                    address: "",
+                  });
+                  setPrices({
+                    totalPrice: 0,
+                    deliveryHanlde: 0,
+                    totalBeforeTax: 0,
+                    taxAmout: 0,
+                    grandTotal: 0,
+                  });
+                  setLoading(false);
+                  setButtonDisabled(false);
+                } else {
+                  toast.error(res.data, toastOptions);
+                  setLoading(false);
+                }
+              });
+          } catch (error) {}
+        } else {
+          toast.error(
+            "Not enough quantity available in stock! Select each products quantity from dropdown menu",
+            toastOptions
+          );
+          setLoading(false);
+          setButtonDisabled(false);
+        }
       }
     } else {
       setFieldEmpty(true);

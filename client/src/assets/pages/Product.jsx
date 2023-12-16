@@ -60,6 +60,7 @@ function Product() {
       price: productInfo.price,
       orderDate: timeAndDate(),
       quantity: quantity,
+      availableQuantity: productInfo.quantity,
       image: productInfo.image.source,
     };
 
@@ -93,7 +94,7 @@ function Product() {
       setQuantity(event.target.value);
     } else {
       setCancelUpdate(false);
-      setQuantity(event.target.value);
+      setQuantity(parseInt(event.target.value));
     }
   }
 
@@ -131,6 +132,22 @@ function Product() {
         </div>
       );
     });
+  }
+
+  let quantitySelectionRenderarray = [];
+  if (productInfo) {
+    for (
+      let i = 1;
+      i <= (productInfo.quantity < 10 ? productInfo.quantity : 10);
+      i++
+    ) {
+      const selectionOption = (
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+      quantitySelectionRenderarray.push(selectionOption);
+    }
   }
 
   const toggleRating = () => {
@@ -231,16 +248,13 @@ function Product() {
                       onChange={handleQuantity}
                       value={quantity}
                     >
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                      <option value={5}>5</option>
-                      <option value={6}>6</option>
-                      <option value={7}>7</option>
-                      <option value={8}>8</option>
-                      <option value={9}>9</option>
-                      <option value={10}>10</option>
+                      {productInfo.quantity ? (
+                        quantitySelectionRenderarray
+                      ) : (
+                        <option key={0} value={0}>
+                          0
+                        </option>
+                      )}
                     </select>
                   </div>
 
@@ -252,7 +266,7 @@ function Product() {
                       ) : (
                         <input
                           onChange={handleNewQuantity}
-                          name="newQuantity"
+                          name="quantity"
                           className="update-product-input"
                           value={quantity}
                           type="number"
@@ -278,12 +292,18 @@ function Product() {
                   </div>
 
                   <div className="singelproduct-button-addedmsg">
-                    <button
-                      onClick={addToCart}
-                      className="add-to-cart-button button-primary singleproduct-button"
-                    >
-                      Add to Cart
-                    </button>
+                    {productInfo.quantity > 0 ? (
+                      <button
+                        onClick={addToCart}
+                        className="add-to-cart-button button-primary singleproduct-button"
+                      >
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <button className="add-to-cart-button button-primary singleproduct-button-disable">
+                        Add to Cart
+                      </button>
+                    )}
                     <div
                       className={`added-to-cart ${
                         isAdded ? "added-to-cart-display added" : ""
@@ -397,7 +417,6 @@ function Product() {
                 </div>
               </div>
             )}
-
             <p className="note-text">
               Note: {""}
               <span className="note-text-span">
