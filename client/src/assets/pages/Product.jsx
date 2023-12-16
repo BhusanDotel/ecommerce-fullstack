@@ -3,12 +3,16 @@ import Nav from "../components/Nav";
 import axios from "axios";
 import { postRatingRoute } from "../Utils/APIRoutes";
 import { postReviewRoute } from "../Utils/APIRoutes";
+import { host } from "../Utils/APIRoutes";
 import { useParams } from "react-router-dom";
 import { StateContext } from "../context/StateContext";
 import { fetchSingleProductRoute } from "../Utils/APIRoutes";
 import { getDate } from "../service/Date";
 import LoadingScreen from "../components/LoadingScreen";
+import io from "socket.io-client";
 import "../styles/SingleProduct.css";
+
+const socket = io.connect(host);
 
 function Product() {
   const { productid } = useParams();
@@ -23,20 +27,20 @@ function Product() {
   } = React.useContext(StateContext);
   const [quantity, setQuantity] = React.useState(1);
   const [newRating, setNewRating] = React.useState(1);
-  const [productInfo, setProductInfo] = React.useState();
+  const [productInfo, setProductInfo] = React.useState("");
   const [isAdded, setAdded] = React.useState(false);
   const [isNewRate, setIsNewRate] = React.useState(false);
   const [newReview, setNewReview] = React.useState("");
   const [isUpdateInput, setUpdateInput] = React.useState(false);
   const [isCancelUpdate, setCancelUpdate] = React.useState(true);
   const [isLoading, setLoading] = React.useState(true);
+  const [trigger, setTrigger] = React.useState(0);
 
   function handleQuantity(e) {
     const _quantity = e.target.value;
     const _quantityInt = parseInt(_quantity);
     setQuantity(_quantityInt);
   }
-
   function timeAndDate() {
     const currentDateTime = new Date();
     const year = currentDateTime.getFullYear();
@@ -107,20 +111,46 @@ function Product() {
   }
 
   React.useEffect(() => {
-    async function getPrpductInfo() {
-      await axios
-        .post(fetchSingleProductRoute, { productid, userAuthToken })
-        .then((res) => {
-          if (res.data) {
-            setProductInfo(res.data);
-            setLoading(false);
-          }
-        });
-    }
+    getPrpductInfo();
+  }, [trigger, socket]);
+
+  async function getPrpductInfo() {
     if (productid && userAuthToken) {
-      getPrpductInfo();
+      try {
+        const res = await axios.post(fetchSingleProductRoute, {
+          productid,
+          userAuthToken,
+        });
+
+        if (res.data) {
+          setProductInfo(res.data);
+          setLoading(false);
+        }
+      } catch (error) {}
     }
-  }, []);
+  }
+
+  React.useEffect(() => {
+    const handleReceiveReview = (data) => {
+      if (data) {
+        trigger();
+      }
+    };
+    const handleReceiveRating = (data) => {
+      if (data) {
+        trigger();
+      }
+    };
+
+    function trigger() {
+      setTimeout(() => {
+        setTrigger((prevCount) => prevCount + 1);
+      }, 1000);
+    }
+
+    socket.on("receive_review", handleReceiveReview);
+    socket.on("receive_rating", handleReceiveRating);
+  }, [socket, trigger]);
 
   let reviewRenderArray;
   if (productInfo) {
@@ -169,12 +199,23 @@ function Product() {
 
   const SaveNewRating = async () => {
     if (userAuthToken && email && productid && newRating) {
-      await axios.post(postRatingRoute, {
-        userAuthToken,
-        email,
-        productid,
-        newRating,
-      });
+      await axios
+        .post(postRatingRoute, {
+          userAuthToken,
+          email,
+          productid,
+          newRating,
+        })
+        .then(socket.emit("send_rating", newRating))
+        .then((res) => {
+          if (res.data) {
+            if (res.data === "rating entry success") {
+              setIsNewRate((prevState) => {
+                return !prevState;
+              });
+            }
+          }
+        });
     }
   };
 
@@ -187,6 +228,7 @@ function Product() {
       lastName &&
       newReview
     ) {
+      socket.emit("send_review", newReview);
       await axios
         .post(postReviewRoute, {
           userAuthToken,

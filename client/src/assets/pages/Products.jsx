@@ -2,12 +2,15 @@ import React from "react";
 import axios from "axios";
 import Nav from "../components/Nav";
 import Product from "../components/Product";
-// import ProductArray from "../data/Products";
 import { StateContext } from "../context/StateContext";
 import "../styles/Products/Products.css";
 import { fetchProductRoute } from "../Utils/APIRoutes";
 import LoadingScreen from "../components/LoadingScreen";
 import { useNavigate } from "react-router-dom";
+import { host } from "../Utils/APIRoutes";
+import io from "socket.io-client";
+
+const socket = io.connect(host);
 
 function Products() {
   const { cartData, setlocalStorageUpdate, setCartData, userAuthToken } =
@@ -43,7 +46,7 @@ function Products() {
       setLoading(false);
     }
     fetchProducts();
-  }, []);
+  }, [socket]);
 
   function recieveData(cartDataProducts) {
     const _cartData = [...cartData];

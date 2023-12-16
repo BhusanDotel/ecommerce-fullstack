@@ -52,6 +52,7 @@ const rating = async (req, res) => {
               }
               productExists.markModified("rating");
               await productExists.save();
+              res.json("rating entry success");
             }
           }
         } else {
@@ -101,6 +102,7 @@ const review = async (req, res) => {
               }
               productExists.markModified("review");
               await productExists.save();
+              res.json("rating entry success");
             }
           }
         } else {

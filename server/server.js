@@ -7,6 +7,8 @@ const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const ratingReviewRoutes = require("./routes/RatingReviewRoutes");
+const initSocket = require("./SocketService");
+const http = require("http");
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
@@ -34,6 +36,9 @@ app.get("/status", (req, res) => {
   res.status(200).send("OK");
 });
 
-app.listen(PORT, () => {
+const server = http.createServer(app);
+initSocket(server);
+
+server.listen(PORT, () => {
   console.log("App listening on port 3000!");
 });
