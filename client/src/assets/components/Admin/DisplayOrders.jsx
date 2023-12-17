@@ -12,7 +12,7 @@ const socket = io.connect(host);
 
 function DisplayOrders() {
   const { adminAuthToken } = useContext(StateContext);
-  const [orderProduct, setOrderProduct] = React.useState("no orders");
+  const [orderProduct, setOrderProduct] = React.useState([]);
   const [orderCount, setOrderCount] = React.useState(0);
   const [isProductsMissing, setProductsMissing] = React.useState(true);
   const [trigger, setTrigger] = React.useState(0);
@@ -20,6 +20,7 @@ function DisplayOrders() {
 
   React.useEffect(() => {
     async function fetchOrders() {
+      setProductsMissing(true);
       const response = await axios.post(fetchOrderRoute, { adminAuthToken });
       if (response) {
         setLoading(false);
@@ -52,11 +53,13 @@ function DisplayOrders() {
     setTrigger((prevCount) => {
       return prevCount + 1;
     });
+    setProductsMissing(true);
   };
   const Delete = () => {
     setTrigger((prevCount) => {
       return prevCount + 1;
     });
+    setProductsMissing(true);
   };
 
   let renderArray = [];
