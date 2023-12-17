@@ -14,13 +14,11 @@ function DisplayOrders() {
   const { adminAuthToken } = useContext(StateContext);
   const [orderProduct, setOrderProduct] = React.useState([]);
   const [orderCount, setOrderCount] = React.useState(0);
-  const [isProductsMissing, setProductsMissing] = React.useState(true);
   const [trigger, setTrigger] = React.useState(0);
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     async function fetchOrders() {
-      setProductsMissing(true);
       const response = await axios.post(fetchOrderRoute, { adminAuthToken });
       if (response) {
         setLoading(false);
@@ -29,7 +27,6 @@ function DisplayOrders() {
           const count = data.length;
           setOrderCount(count);
           setOrderProduct(data);
-          setProductsMissing(false);
         } else {
           setOrderCount(0);
           setOrderProduct([]);
@@ -53,13 +50,11 @@ function DisplayOrders() {
     setTrigger((prevCount) => {
       return prevCount + 1;
     });
-    setProductsMissing(true);
   };
   const Delete = () => {
     setTrigger((prevCount) => {
       return prevCount + 1;
     });
-    setProductsMissing(true);
   };
 
   let renderArray = [];
@@ -86,7 +81,7 @@ function DisplayOrders() {
         <>
           <h1 className="ordered-products-title">Ordered Products</h1>
           <div className="admin-orders-container">{renderArray}</div>
-          {isProductsMissing && <p>No Orders, Sad!</p>}
+          {orderProduct.length === 0 && <p>No Orders, Sad!</p>}
         </>
       )}
     </>
