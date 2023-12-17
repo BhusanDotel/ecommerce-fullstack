@@ -239,6 +239,9 @@
   .singleproduct-review-root {
     padding-left: 50px;
   }
+  .reviews-title {
+    width: 80%;
+  }
   .reviews-container {
     width: 80%;
   }

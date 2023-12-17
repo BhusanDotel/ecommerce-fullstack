@@ -24,6 +24,14 @@ const initSocket = (httpServer) => {
     socket.on("send_review", (review) => {
       io.emit("receive_review", review);
     });
+
+    socket.on("place_order", (data) => {
+      io.emit("receive_order", data);
+    });
+
+    socket.on("added_product", (name) => {
+      io.emit("receive_product", name);
+    });
   });
 };
 

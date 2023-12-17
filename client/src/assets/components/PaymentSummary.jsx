@@ -5,8 +5,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../context/StateContext";
 import "../styles/Chcekout/PaymentSummar.css";
 import { orderRoute } from "../Utils/APIRoutes";
+import { host } from "../Utils/APIRoutes";
 import LoadingSVG from "./LoadingSVG";
+import io from "socket.io-client";
 
+const socket = io.connect(host);
 function PaymentSummary() {
   const {
     cartData,
@@ -112,6 +115,7 @@ function PaymentSummary() {
                   setLoading(false);
                 }
               });
+            await socket.emit("place_order", cartData);
           } catch (error) {}
         } else {
           toast.error(

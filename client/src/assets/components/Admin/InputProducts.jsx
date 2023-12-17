@@ -3,6 +3,10 @@ import axios from "axios";
 import { productDataRoute, productImageRoute } from "../../Utils/APIRoutes";
 import "../../styles/Admin/InputProducts.css";
 import { StateContext } from "../../context/StateContext";
+import { host } from "../../Utils/APIRoutes";
+import io from "socket.io-client";
+
+const socket = io.connect(host);
 
 function InputProducts() {
   const { adminAuthToken } = React.useContext(StateContext);
@@ -69,6 +73,7 @@ function InputProducts() {
                     setResponse(false);
                     setGoodResponse(false);
                   }, 2000);
+                socket.emit("added_product", name);
               } else {
                 setResponse(true);
                 setGoodResponse(false);

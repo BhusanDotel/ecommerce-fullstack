@@ -17,6 +17,7 @@ function Products() {
     React.useContext(StateContext);
   const [ProductData, setProductData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
+  const [trigger, setTrigger] = React.useState(0);
   const navigate = useNavigate();
 
   const renderProductsArray = ProductData.map((product, index) => {
@@ -46,6 +47,16 @@ function Products() {
       setLoading(false);
     }
     fetchProducts();
+  }, [trigger]);
+
+  React.useEffect(() => {
+    socket.on("receive_product", (data) => {
+      if (data) {
+        setTrigger((prevState) => {
+          return prevState + 1;
+        });
+      }
+    });
   }, [socket]);
 
   function recieveData(cartDataProducts) {

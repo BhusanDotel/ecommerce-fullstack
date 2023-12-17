@@ -4,7 +4,11 @@ import Orders from "./Orders";
 import { StateContext } from "../../context/StateContext";
 import { fetchOrderRoute } from "../../Utils/APIRoutes";
 import LoadingScreen from "../LoadingScreen";
+import { host } from "../../Utils/APIRoutes";
+import io from "socket.io-client";
 import "../../styles/Admin/DisplayOrders.css";
+
+const socket = io.connect(host);
 
 function DisplayOrders() {
   const { adminAuthToken } = useContext(StateContext);
@@ -33,6 +37,16 @@ function DisplayOrders() {
     }
     fetchOrders();
   }, [trigger]);
+
+  React.useEffect(() => {
+    socket.on("receive_order", (data) => {
+      if (data) {
+        setTrigger((prevCount) => {
+          return prevCount + 1;
+        });
+      }
+    });
+  }, [socket]);
 
   const Save = () => {
     setTrigger((prevCount) => {
