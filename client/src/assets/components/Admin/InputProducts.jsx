@@ -73,7 +73,7 @@ function InputProducts() {
                     setResponse(false);
                     setGoodResponse(false);
                   }, 2000);
-                socket.emit("added_product", name);
+                socket.emit("added_product", "Product_name");
               } else {
                 setResponse(true);
                 setGoodResponse(false);
