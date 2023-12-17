@@ -14,7 +14,7 @@ function DisplayOrders() {
   const { adminAuthToken } = useContext(StateContext);
   const [orderProduct, setOrderProduct] = React.useState("no orders");
   const [orderCount, setOrderCount] = React.useState(0);
-  const [isProductsMissing, setProductsMissing] = React.useState(false);
+  const [isProductsMissing, setProductsMissing] = React.useState(true);
   const [trigger, setTrigger] = React.useState(0);
   const [isLoading, setLoading] = React.useState(true);
 
@@ -28,8 +28,8 @@ function DisplayOrders() {
           const count = data.length;
           setOrderCount(count);
           setOrderProduct(data);
+          setProductsMissing(false);
         } else {
-          setProductsMissing(true);
           setOrderCount(0);
           setOrderProduct([]);
         }
