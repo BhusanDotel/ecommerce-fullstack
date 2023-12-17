@@ -7,6 +7,8 @@ import { host } from "../Utils/APIRoutes";
 import { useParams } from "react-router-dom";
 import { StateContext } from "../context/StateContext";
 import { fetchSingleProductRoute } from "../Utils/APIRoutes";
+import { fetchRatingRoute } from "../Utils/APIRoutes";
+import { fetchReviewRoute } from "../Utils/APIRoutes";
 import { getDate } from "../service/Date";
 import LoadingScreen from "../components/LoadingScreen";
 import io from "socket.io-client";
@@ -26,6 +28,8 @@ function Product() {
     lastName,
   } = React.useContext(StateContext);
   const [quantity, setQuantity] = React.useState(1);
+  const [rating, setRating] = React.useState("");
+  const [review, setReview] = React.useState("");
   const [newRating, setNewRating] = React.useState(1);
   const [productInfo, setProductInfo] = React.useState("");
   const [isAdded, setAdded] = React.useState(false);
@@ -112,23 +116,68 @@ function Product() {
 
   React.useEffect(() => {
     getPrpductInfo();
-  }, [trigger, socket]);
+    async function getPrpductInfo() {
+      if (productid && userAuthToken) {
+        try {
+          const res = await axios.post(fetchSingleProductRoute, {
+            productid,
+            userAuthToken,
+          });
 
-  async function getPrpductInfo() {
-    if (productid && userAuthToken) {
-      try {
-        const res = await axios.post(fetchSingleProductRoute, {
-          productid,
-          userAuthToken,
-        });
-
-        if (res.data) {
-          setProductInfo(res.data);
-          setLoading(false);
-        }
-      } catch (error) {}
+          if (res.data) {
+            setProductInfo(res.data);
+            setLoading(false);
+          }
+        } catch (error) {}
+      }
     }
-  }
+  }, []);
+
+  React.useEffect(() => {
+    getRating();
+    getReview();
+    async function getRating() {
+      await axios
+        .post(fetchRatingRoute, { userAuthToken, productid })
+        .then((res) => {
+          if (res.data) {
+            setRating(res.data);
+          }
+        });
+    }
+    async function getReview() {
+      await axios
+        .post(fetchReviewRoute, { userAuthToken, productid })
+        .then((res) => {
+          if (res.data) {
+            setReview(res.data);
+          }
+        });
+    }
+  }, [trigger]);
+
+  React.useEffect(() => {
+    getRating();
+    getReview();
+    async function getRating() {
+      await axios
+        .post(fetchRatingRoute, { userAuthToken, productid })
+        .then((res) => {
+          if (res.data) {
+            setRating(res.data);
+          }
+        });
+    }
+    async function getReview() {
+      await axios
+        .post(fetchReviewRoute, { userAuthToken, productid })
+        .then((res) => {
+          if (res.data) {
+            setReview(res.data);
+          }
+        });
+    }
+  }, [trigger]);
 
   React.useEffect(() => {
     const handleReceiveReview = (data) => {
@@ -148,11 +197,16 @@ function Product() {
 
     socket.on("receive_review", handleReceiveReview);
     socket.on("receive_rating", handleReceiveRating);
-  }, [socket, trigger]);
+
+    return () => {
+      socket.off("receive_review", handleReceiveReview);
+      socket.off("receive_rating", handleReceiveRating);
+    };
+  }, [socket]);
 
   let reviewRenderArray;
-  if (productInfo) {
-    reviewRenderArray = productInfo.review.map((review, index) => {
+  if (review) {
+    reviewRenderArray = review.map((review, index) => {
       return (
         <div key={index} className="review-row">
           <p className="reviewer-name">{review.reviewer}</p>
@@ -204,7 +258,7 @@ function Product() {
           productid,
           newRating,
         })
-        .then(socket.emit("send_rating", newRating))
+
         .then((res) => {
           if (res.data) {
             if (res.data === "rating entry success") {
@@ -214,6 +268,7 @@ function Product() {
             }
           }
         });
+      await socket.emit("send_rating", newRating);
     }
   };
 
@@ -226,7 +281,6 @@ function Product() {
       lastName &&
       newReview
     ) {
-      socket.emit("send_review", newReview);
       await axios
         .post(postReviewRoute, {
           userAuthToken,
@@ -237,6 +291,7 @@ function Product() {
           newReview,
         })
         .then(setNewReview(""));
+      await socket.emit("send_review", newReview);
     }
   };
 
@@ -359,17 +414,18 @@ function Product() {
                     </div>
                   </div>
 
-                  <div className="show-rating-container">
-                    <img
-                      className="product-rating-stars singleproduct-rating"
-                      src={`/images/ratings/rating-${
-                        productInfo.rating.stars * 10
-                      }.png`}
-                    />
-                    <p className="singleproduct-rating-count">
-                      {productInfo.rating.count}
-                    </p>
-                  </div>
+                  {rating && (
+                    <div className="show-rating-container">
+                      <img
+                        className="product-rating-stars singleproduct-rating"
+                        src={`/images/ratings/rating-${rating.stars * 10}.png`}
+                      />
+                      <p className="singleproduct-rating-count">
+                        {/* {productInfo.rating.count} */}
+                        {rating.count}
+                      </p>
+                    </div>
+                  )}
                   <div className="new-Rating-container">
                     {productInfo.trueCustomers.includes(email) ? (
                       <p

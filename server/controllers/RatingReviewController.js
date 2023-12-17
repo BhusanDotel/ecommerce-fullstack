@@ -113,7 +113,47 @@ const review = async (req, res) => {
   }
 };
 
+const fetchRating = async (req, res) => {
+  if (req.body) {
+    const { productid, userAuthToken } = req.body;
+    if (productid && userAuthToken) {
+      const userExists = await UserData.findOne({ userToken: userAuthToken });
+      if (userExists) {
+        try {
+          const productExists = await ProductData.findOne({ _id: productid });
+          if (productExists) {
+            res.json(productExists.rating);
+          }
+        } catch (error) {
+          res.json(error);
+        }
+      }
+    }
+  }
+};
+
+const fetchReview = async (req, res) => {
+  if (req.body) {
+    const { productid, userAuthToken } = req.body;
+    if (productid && userAuthToken) {
+      const userExists = await UserData.findOne({ userToken: userAuthToken });
+      if (userExists) {
+        try {
+          const productExists = await ProductData.findOne({ _id: productid });
+          if (productExists) {
+            res.json(productExists.review);
+          }
+        } catch (error) {
+          res.json(error);
+        }
+      }
+    }
+  }
+};
+
 module.exports = {
   rating,
   review,
+  fetchRating,
+  fetchReview,
 };
