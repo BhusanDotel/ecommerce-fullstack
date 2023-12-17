@@ -11,7 +11,7 @@ const { Server } = require("socket.io");
 const initSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "https://kindim-na-ta.onrender.com/",
+      origin: "https://kindim-na-ta.onrender.com",
       methods: ["GET", "POST"],
     },
   });
