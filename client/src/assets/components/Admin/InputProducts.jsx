@@ -102,7 +102,7 @@ function InputProducts() {
             name="name"
             value={detail.name}
             className="admin-input-productName"
-            placeholder="ProductName*"
+            placeholder="ProductName* (Do not use special characters)"
           ></input>
           <input
             type="number"
