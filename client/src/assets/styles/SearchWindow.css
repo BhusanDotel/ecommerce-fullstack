@@ -1,0 +1,13 @@
+.search-items-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+  max-height: 250px;
+  padding-bottom: 5px;
+  overflow-y: scroll;
+}
+.no-product-found {
+  color: white;
+  font-size: 12px;
+  margin: 10px;
+}

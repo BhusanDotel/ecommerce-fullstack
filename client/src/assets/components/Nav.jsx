@@ -1,11 +1,14 @@
 import React from "react";
 import { StateContext } from "../context/StateContext";
+import SearchWindow from "./SearchWindow";
 
 import "../styles/Nav.css";
 
 function Nav() {
   const [showMenu, setShowMenu] = React.useState(false);
+  const [isSearchWindow, setSearchwindow] = React.useState(false);
   const { totalQuantity } = React.useContext(StateContext);
+  const [searchKeyWord, setSearchKeyWord] = React.useState("");
 
   function toggleMenu() {
     setShowMenu((prevState) => {
@@ -16,6 +19,15 @@ function Nav() {
     localStorage.clear();
     location.reload();
   }
+  const handlechange = (e) => {
+    if (e.target.value) {
+      setSearchwindow(true);
+      setSearchKeyWord(e.target.value);
+    } else {
+      setSearchwindow(false);
+    }
+  };
+
   return (
     <div className="home-header">
       <div className="home-header-left-section">
@@ -26,11 +38,22 @@ function Nav() {
       </div>
 
       <div className="home-header-middle-section">
-        <input className="search-bar" type="text" placeholder="Search" />
+        <input
+          onChange={handlechange}
+          className="search-bar"
+          type="text"
+          placeholder="Search"
+        />
 
         <button className="search-button">
           <img className="search-icon" src="/images/icons/search-icon.png" />
         </button>
+
+        {isSearchWindow && (
+          <div className="search-window-root-container">
+            <SearchWindow key={searchKeyWord} searchKeyWord={searchKeyWord} />
+          </div>
+        )}
       </div>
 
       <div className="home-header-right-section">

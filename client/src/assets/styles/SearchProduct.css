@@ -1,0 +1,26 @@
+.searchproduct-row {
+  display: flex;
+  background-color: rgb(10, 10, 9);
+  align-items: center;
+  column-gap: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.searchproduct-row:active {
+  transform: scale(0.99);
+}
+
+.searchproduct-image-div {
+  height: 40px;
+  width: 40px;
+}
+.searchproduct-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.searchproduct-name {
+  font-size: 12px;
+  color: white;
+}
