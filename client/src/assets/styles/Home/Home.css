@@ -18,6 +18,8 @@
   object-position: center;
   bottom: 20%;
   left: 20%;
+}
+.home-img-beerglass-animate {
   animation: moveBeerGlass 3s ease-in-out;
 }
 .home-img-tuborgbeer {
@@ -28,6 +30,8 @@
   object-position: center;
   bottom: 20%;
   left: 12%;
+}
+.home-img-tuborgbeer-animate {
   animation: moveBeer 3s ease-in-out;
 }
 
