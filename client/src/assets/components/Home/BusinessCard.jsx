@@ -29,7 +29,7 @@ function BusinessCard() {
             src="/images/homeImg/telephone-icon.png"
             alt="tel-icon"
           />
-          <p>+977-9856354401</p>
+          <p>+977-9869102440</p>
         </div>
         <div className="email-div">
           <img
@@ -37,7 +37,7 @@ function BusinessCard() {
             src="/images/homeImg/email-icon.png"
             alt="mail-icon"
           />
-          <p>randomgmail@gmail.com</p>
+          <p>dotelbhusan0@gmail.com</p>
         </div>
       </div>
 

@@ -39,9 +39,8 @@ function Home() {
     if (isBeerRendered && isGlassRendered) {
       setRendered(true);
     }
-
+    // Image is already loaded (possibly from cache)
     if (myImage1 && myImage1.complete && myImage2 && myImage2.complete) {
-      // Image is already loaded (possibly from cache)
       setRendered(true);
     } else if (myImage1 && myImage2) {
       // Image is not loaded, add an event listener
