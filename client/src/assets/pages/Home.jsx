@@ -6,8 +6,8 @@ import "../styles/Home/Home.css";
 
 function Home() {
   const [isInfoCard, setInfoCard] = React.useState(false);
-  const [isGlassRendered, setGlassRendred] = React.useState(true);
-  const [isBeerRendered, setBeerRendred] = React.useState(true);
+  const [isGlassRendered, setGlassRendred] = React.useState(false);
+  const [isBeerRendered, setBeerRendred] = React.useState(false);
   const [isRendered, setRendered] = React.useState(false);
 
   const toggleInfoCard = () => {
@@ -40,8 +40,8 @@ function Home() {
       setRendered(true);
     }
 
-    // Image is already loaded (possibly from cache)
     if (myImage1 && myImage1.complete && myImage2 && myImage2.complete) {
+      // Image is already loaded (possibly from cache)
       setRendered(true);
     } else if (myImage1 && myImage2) {
       // Image is not loaded, add an event listener
