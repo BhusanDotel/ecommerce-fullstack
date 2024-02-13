@@ -6,6 +6,7 @@ function SearchProduct(props) {
   const navigate = useNavigate();
   const Product = () => {
     navigate(`/products/${props.id}`);
+    location.reload();
   };
   return (
     <>
