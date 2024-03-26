@@ -4,13 +4,13 @@ import "../../styles/Home/BusinessCard.css";
 function BusinessCard() {
   const toFacebook = () => {
     window.location.href =
-      "https://www.facebook.com/profile.php?id=100009028581010";
+      "https://www.facebook.com/abhi.pok/";
   };
   const toInsta = () => {
-    window.location.href = "https://www.instagram.com/bhusan_dotel/";
+    window.location.href = "https://www.instagram.com/_darkside_of_the_moon/";
   };
   const toTwitter = () => {
-    window.location.href = "https://twitter.com/BhusanDotel";
+    window.location.href = "https://twitter.com/abhishake789";
   };
   return (
     <businesscard className="businesscard-root">
@@ -21,7 +21,7 @@ function BusinessCard() {
             src="/images/homeImg/navpin-icon.png"
             alt="nav-icon"
           />
-          <p>Bhaktapur, Biruwa</p>
+          <p>Lubhu, Lalitpur</p>
         </div>
         <div className="phone-div">
           <img
@@ -29,7 +29,7 @@ function BusinessCard() {
             src="/images/homeImg/telephone-icon.png"
             alt="tel-icon"
           />
-          <p href="tel:9869102440">+977-9869102440</p>
+          <p href="tel:9841589007">+977-9841589007</p>
         </div>
         <div className="email-div">
           <img
@@ -37,7 +37,7 @@ function BusinessCard() {
             src="/images/homeImg/email-icon.png"
             alt="mail-icon"
           />
-          <p href="mailto:dotelbhusan0@email.com">dotelbhusan0@gmail.com</p>
+          <p href="mailto:abhipok4@gmail.com">abhipok4@gmail.com</p>
         </div>
       </div>
 
